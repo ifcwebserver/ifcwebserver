@@ -1,10 +1,13 @@
 ==Implementation examples for IFC schema rules==
 Those examples are listed to help developers to implement more rules.
-feel free to send your rules implementation as an issue to include it in the main code.
+feel free to send your rules implementation as an issue to include them in the main code.
 
  # IfcActorRole
+ 
 {{{
 def validate_rules
+#developer name:
+#date:22.08.2011
 # WR1 : (Role <> IfcRoleEnum.USERDEFINED) OR ((Role = IfcRoleEnum.USERDEFINED) AND  EXISTS(SELF.UserDefinedRole));
  if (@role != ".USERDEFINED." or (@role == ".USERDEFINED." and (@userDefinedRole != '$' and @userDefinedRole != '' ))) == false
 	#print warning message				
@@ -14,6 +17,8 @@ end
  # IfcPerson
 {{{
 def validate_rules
+#developer name:
+#date:22.08.2011
 # WR1 : EXISTS(FamilyName) OR   EXISTS(GivenName);		
  if (@familyName== "$" or @familyName== "''")  and (@givenName== "$" or @givenName== "''")
 	#print warning message				
@@ -23,6 +28,8 @@ end
  # IfcRelNests
 {{{
 def validate_rules
+#developer name:
+#date:22.08.2011
 #NoSelfReference WR1 : SIZEOF(QUERY(Temp <* SELF\IfcRelDecomposes.RelatedObjects | NOT(TYPEOF(SELF\IfcRelDecomposes.RelatingObject) = TYPEOF(Temp)))) = 0;
  if @relatedObjects.to_s.include?(@relatingObject.to_s) and @relatedObjects != nil			
 	#print warning message
@@ -32,6 +39,8 @@ end
  # IfcZone
 {{{
 def validate_rules
+#developer name:
+#date:22.08.2011
 #IFC2x3
 #WR1 :SIZEOF (QUERY (temp <* SELF\IfcGroup.IsGroupedBy.RelatedObjects | NOT(('IFCPRODUCTEXTENSION.IFCZONE' IN TYPEOF(temp)) 
 #     OR ('IFCPRODUCTEXTENSION.IFCSPACE' IN TYPEOF(temp))) )) = 0;
