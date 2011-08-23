@@ -30,7 +30,8 @@ end
 def validate_rules
 #developer name:
 #date:22.08.2011
-#NoSelfReference WR1 : SIZEOF(QUERY(Temp <* SELF\IfcRelDecomposes.RelatedObjects | NOT(TYPEOF(SELF\IfcRelDecomposes.RelatingObject) = TYPEOF(Temp)))) = 0;
+#NoSelfReference WR1 : SIZEOF(QUERY(Temp <* SELF\IfcRelDecomposes.RelatedObjects 
+# | NOT(TYPEOF(SELF\IfcRelDecomposes.RelatingObject) = TYPEOF(Temp)))) = 0;
  if @relatedObjects.to_s.include?(@relatingObject.to_s) and @relatedObjects != nil			
 	#print warning message
  end
