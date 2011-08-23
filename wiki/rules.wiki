@@ -43,8 +43,8 @@ def validate_rules
 #developer name:
 #date:22.08.2011
 #IFC2x3
-#WR1 :SIZEOF (QUERY (temp <* SELF\IfcGroup.IsGroupedBy.RelatedObjects | NOT(('IFCPRODUCTEXTENSION.IFCZONE' IN TYPEOF(temp)) 
-#     OR ('IFCPRODUCTEXTENSION.IFCSPACE' IN TYPEOF(temp))) )) = 0;
+#WR1:SIZEOF(QUERY(temp<*SELF\IfcGroup.IsGroupedBy.RelatedObjects | NOT(('IFCPRODUCTEXTENSION.IFCZONE' IN TYPEOF(temp)) 
+# OR('IFCPRODUCTEXTENSION.IFCSPACE'IN TYPEOF(temp)))))=0;
 #IFC2x4
 #WR1 : 	(SIZEOF(SELF\IfcGroup.IsGroupedBy) = 0) 
 #  OR (SIZEOF (QUERY (temp <* SELF\IfcGroup.IsGroupedBy[1].RelatedObjects | NOT(('IFC2X4_ALPHA.IFCZONE' IN TYPEOF(temp)) 
