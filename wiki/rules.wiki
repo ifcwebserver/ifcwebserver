@@ -2,8 +2,7 @@
 Those examples are listed to help developers to implement more rules.
 feel free to send your rules implementation as an issue to include them in the main code.
 
- # IfcActorRole
- 
+ # IfcActorRole 
 {{{
 def validate_rules
 #developer name:
@@ -39,19 +38,22 @@ end
 }}}
  # IfcZone
 {{{
-def validate_rules
-#developer name:
-#date:22.08.2011
-#IFC2x3
-#WR1:SIZEOF(QUERY(temp<*SELF\IfcGroup.IsGroupedBy.RelatedObjects | NOT(('IFCPRODUCTEXTENSION.IFCZONE' IN TYPEOF(temp)) 
-# OR('IFCPRODUCTEXTENSION.IFCSPACE'IN TYPEOF(temp)))))=0;
-#IFC2x4
-#WR1 : 	(SIZEOF(SELF\IfcGroup.IsGroupedBy) = 0) 
-#  OR (SIZEOF (QUERY (temp <* SELF\IfcGroup.IsGroupedBy[1].RelatedObjects | NOT(('IFC2X4_ALPHA.IFCZONE' IN TYPEOF(temp)) 
-#  OR ('IFC2X4_ALPHA.IFCSPACE' IN TYPEOF(temp)) OR ('IFC2X4_ALPHA.IFCSPATIALZONE' IN TYPEOF(temp)) ))) = 0);
+/*
+developer name:
+date:22.08.2011
+IFC2x3
+WR1:
+SIZEOF(QUERY(temp<*SELF\IfcGroup.IsGroupedBy.RelatedObjects|NOT(('IFCPRODUCTEXTENSION.IFCZONE'IN TYPEOF(temp)) 
+ OR('IFCPRODUCTEXTENSION.IFCSPACE'IN TYPEOF(temp)))))=0;
+IFC2x4
+WR1 : 	(SIZEOF(SELF\IfcGroup.IsGroupedBy) = 0) 
+  OR (SIZEOF (QUERY (temp <* SELF\IfcGroup.IsGroupedBy[1].RelatedObjects|NOT(('IFCZONE' IN TYPEOF(temp)) 
+  OR ('IFC2X4_ALPHA.IFCSPACE' IN TYPEOF(temp)) OR ('IFC2X4_ALPHA.IFCSPATIALZONE' IN TYPEOF(temp)) ))) = 0);
 
-#A Zone is grouped by the objectified relationship IfcRelAssignsToGroup.
-#Only objects of type IfcSpace or IfcZone are allowed as RelatedObjects.
+A Zone is grouped by the objectified relationship IfcRelAssignsToGroup.
+Only objects of type IfcSpace or IfcZone are allowed as RelatedObjects.
+*/
+def validate_rules
  if @isGroupedBy != nil 
  isGroupedByObj=$ifcObjects[@isGroupedBy].relatedObjects.split("#").each { |relObj_ID|
   if $ifcObjects[relObj_ID].class.to_s == "IFCSPACE" or $ifcObjects[relObj_ID].class.to_s == "IFCZONE"
