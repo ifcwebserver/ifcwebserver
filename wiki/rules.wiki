@@ -1,6 +1,7 @@
 ==Implementation examples for IFC schema rules==
-Those examples are listed to help developers to implement more rules.
-feel free to send your rules implementation as an issue to include them in the main code.
+These examples are listed to explain how to implement schema rules as Ruby methods.
+Each IFC class could have a method called _validate_rules_
+
 
  # IfcActorRole 
 {{{
