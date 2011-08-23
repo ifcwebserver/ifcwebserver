@@ -1,0 +1,29 @@
+ # IFCACTORROLE	
+{{{
+class IFCACTORROLE	
+	def validate_rules
+		# WR1 : (Role <> IfcRoleEnum.USERDEFINED) OR ((Role = IfcRoleEnum.USERDEFINED) AND  EXISTS(SELF.UserDefinedRole));
+		if (@role != ".USERDEFINED." or (@role == ".USERDEFINED." and (@userDefinedRole != '$' and @userDefinedRole != '' ))) == false
+			#print warning message				
+		end	
+	end
+end
+}}}
+ # IFCPERSON
+{{{
+def validate_rules
+		# WR1 : EXISTS(FamilyName) OR   EXISTS(GivenName);		
+		if (@familyName== "$" or @familyName== "''")  and (@givenName== "$" or @givenName== "''")
+			#print warning message				
+		end	
+	end
+}}}
+ # IFCRELNESTS
+{{{
+def validate_rules
+		#NoSelfReference WR1 : SIZEOF(QUERY(Temp <* SELF\IfcRelDecomposes.RelatedObjects | NOT(TYPEOF(SELF\IfcRelDecomposes.RelatingObject) = TYPEOF(Temp)))) = 0;
+		if @relatedObjects.to_s.include?(@relatingObject.to_s) and @relatedObjects != nil			
+			#print warning message
+		end
+	end
+}}}
