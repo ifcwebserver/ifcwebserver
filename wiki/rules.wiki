@@ -20,7 +20,7 @@ def validate_rules
 #developer name:
 #date:22.08.2011
 # WR1 : EXISTS(FamilyName) OR   EXISTS(GivenName);		
- if (@familyName== "$" or @familyName== "''")  and (@givenName== "$" or @givenName== "''")
+ if(@familyName=="$" or @familyName=="''")&&(@givenName=="$" or @givenName== "''")
 	#print warning message				
  end	
 end
