@@ -1,6 +1,6 @@
- # IFCACTORROLE	
+ # IfcActorRole	
 {{{
-class IFCACTORROLE	
+class IFCACTORROLE
 	def validate_rules
 		# WR1 : (Role <> IfcRoleEnum.USERDEFINED) OR ((Role = IfcRoleEnum.USERDEFINED) AND  EXISTS(SELF.UserDefinedRole));
 		if (@role != ".USERDEFINED." or (@role == ".USERDEFINED." and (@userDefinedRole != '$' and @userDefinedRole != '' ))) == false
@@ -9,7 +9,7 @@ class IFCACTORROLE
 	end
 end
 }}}
- # IFCPERSON
+ # IfcPerson
 {{{
 def validate_rules
 		# WR1 : EXISTS(FamilyName) OR   EXISTS(GivenName);		
@@ -18,7 +18,7 @@ def validate_rules
 		end	
 	end
 }}}
- # IFCRELNESTS
+ # IfcRelNests
 {{{
 def validate_rules
 		#NoSelfReference WR1 : SIZEOF(QUERY(Temp <* SELF\IfcRelDecomposes.RelatedObjects | NOT(TYPEOF(SELF\IfcRelDecomposes.RelatingObject) = TYPEOF(Temp)))) = 0;
@@ -26,4 +26,25 @@ def validate_rules
 			#print warning message
 		end
 	end
+}}}
+ # IfcZone
+{{{
+	def validate_rules
+		#IFC2x3
+		#WR1 : 	SIZEOF (QUERY (temp <* SELF\IfcGroup.IsGroupedBy.RelatedObjects | NOT(('IFCPRODUCTEXTENSION.IFCZONE' IN TYPEOF(temp)) OR ('IFCPRODUCTEXTENSION.IFCSPACE' IN TYPEOF(temp))) )) = 0;
+		#IFC2x4
+		#WR1 : 	(SIZEOF(SELF\IfcGroup.IsGroupedBy) = 0) OR (SIZEOF (QUERY (temp <* SELF\IfcGroup.IsGroupedBy[1].RelatedObjects | NOT(('IFC2X4_ALPHA.IFCZONE' IN TYPEOF(temp)) OR ('IFC2X4_ALPHA.IFCSPACE' IN TYPEOF(temp)) OR ('IFC2X4_ALPHA.IFCSPATIALZONE' IN TYPEOF(temp)) ))) = 0);
+		
+		# A Zone is grouped by the objectified relationship IfcRelAssignsToGroup. Only objects of type IfcSpace or IfcZone are allowed as RelatedObjects.
+		
+		if @isGroupedBy != nil 
+			isGroupedByObj=$ifcObjects[@isGroupedBy].relatedObjects.split("#").each { |relObj_ID|
+			if $ifcObjects[relObj_ID].class.to_s == "IFCSPACE" or $ifcObjects[relObj_ID].class.to_s == "IFCZONE"
+			else
+			    #print warning message
+			end;
+			}					
+		end	
+	end
+
 }}}
