@@ -1,5 +1,8 @@
- # IfcActorRole
+==Implementation examples for IFC schema rules==
+Those examples are listed to help developers to implement more rules.
+feel free to send your rules implementation as an issue to include it in the main code.
 
+ # IfcActorRole
 {{{
 def validate_rules
 # WR1 : (Role <> IfcRoleEnum.USERDEFINED) OR ((Role = IfcRoleEnum.USERDEFINED) AND  EXISTS(SELF.UserDefinedRole));
@@ -9,7 +12,6 @@ def validate_rules
 end
 }}}
  # IfcPerson
-
 {{{
 def validate_rules
 # WR1 : EXISTS(FamilyName) OR   EXISTS(GivenName);		
@@ -19,7 +21,6 @@ def validate_rules
 end
 }}}
  # IfcRelNests
-
 {{{
 def validate_rules
 #NoSelfReference WR1 : SIZEOF(QUERY(Temp <* SELF\IfcRelDecomposes.RelatedObjects | NOT(TYPEOF(SELF\IfcRelDecomposes.RelatingObject) = TYPEOF(Temp)))) = 0;
@@ -29,7 +30,6 @@ def validate_rules
 end
 }}}
  # IfcZone
-
 {{{
 def validate_rules
 #IFC2x3
@@ -51,5 +51,4 @@ def validate_rules
  }					
  end	
 end
-
 }}}
