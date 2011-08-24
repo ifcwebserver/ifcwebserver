@@ -1,4 +1,3 @@
-
 =Examples of filter expressions =
 
 Filters are string expressions provided by the user to select a set of objects which satisfy a set of conditions, it offers a handy way to generate reports, check for missed attributes information on objects, export a partial model, and more.
@@ -6,6 +5,11 @@ Filters are string expressions provided by the user to select a set of objects w
 
 here are a list of simple filters which you can try them on the IFC file: *AC10-Institute-Var-1.ifc*
 
+ # Select the file AC10-Institute-Var-1.ifc from the files drop down list.
+ # Select the IfcSlab class from the classes select lists(or any of its super classes).
+ # Write the filter expression inside the "Advanced Filter" input box.
+ # Press "go" button or hit the return key.
+----
   * get all slabs
 {{{
 o.class = IFCSLAB
@@ -15,39 +19,44 @@ The letter *"o"* refers inside the filter expression to a dummy object and shoul
 
   * get all slab objects which are defined as Roofs
 {{{
-o.class = IFCSLAB and o.predefinedType  = '.ROOF.'
+o.class == IFCSLAB and o.predefinedType  == '.ROOF.'
 }}}
+Here we used a class variable to extend the filter
   * get all slab objects which their names contains the word 'Dach' (it means roof in German)
 {{{
 o.class == IFCSLAB and o.name.include?("Dach")
 }}}
+Here we used a Ruby method inside the filter !
   * get a certain slab through its globalId attribute
 {{{
 o.class == IFCSLAB and o.globalId == "'2WnDGvXIP14xQJyJ3RQPXx'"
 }}}
 
-what about if we like to get a list of all IfcBuildingElement objects, of course we can do the same like above and write such a boring filter expression :
+what about if we like to get a list of all IfcBuildingElement objects which have a non empty "description" attribute ?
+of course we can do the same like above and write such a boring filter expression :
 {{{
-o.class == IFCBUILDINGELEMENTCOMPONENT or
-o.class == IFCBUILDINGELEMENTPART or
-o.class == IFCBUILDINGELEMENTPROXY or
-o.class == IFCCOLUMN or
-o.class == IFCCOVERING or
-o.class == IFCCURTAINWALL or
-o.class == IFCDOOR or
-o.class == IFCFOOTING or
-o.class == .. or
-o.class == .. or
-o.class == .. or
-o.class == IFCWINDOW 
+(o.class == IFCBUILDINGELEMENTCOMPONENT  or
+ o.class == IFCBUILDINGELEMENTPART or
+ o.class == IFCBUILDINGELEMENTPROXY or
+ o.class == IFCCOLUMN or
+ o.class == IFCCOVERING or
+ o.class == IFCCURTAINWALL or
+ o.class == IFCDOOR or
+ o.class == IFCFOOTING or
+ o.class == .. or
+ o.class == .. or
+ o.class == .. or
+ o.class == IFCWINDOW ) and o.description != '$' and o.description != ''
 }}}
-But some magic we can simply write the filter expression like this:
+But with some magic we can simply write the filter expression like this:
 {{{
-o.class.superclass == IFCBUILDINGELEMENT
+o.class.superclass == IFCBUILDINGELEMENT and o.description.size > 2
 }}}
-
-filter expression can be used to select objects depending on their classes,super classes, and their  attributes values.
-inside the filter expression you can use any valid Ruby method to form a valid logical expression. Following methods and key words are examples of what you can use :
+Here we used our knowledge about the IFC schema specification and the power of meta-programming in Ruby to make our life much more simple.
+ 
+so again in short word:filter expression can be used to select objects depending on their classes,super classes, and their  attributes values.
+inside the filter expression you can use any valid Ruby method to form a valid logical expression. 
+Following methods and key words are examples of what you can use :
 {{{
 and  (or &&)
 or ( or | )
