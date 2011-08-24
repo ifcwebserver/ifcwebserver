@@ -1,0 +1,89 @@
+
+=Examples of filter expressions =
+
+Filters are string expressions provided by the user to select a set of objects which satisfy a set of conditions, it offers a handy way to generate reports, check for missed attributes information on objects, export a partial model, and more.
+ 
+
+here are a list of simple filters which you can try them on the IFC file: *AC10-Institute-Var-1.ifc*
+
+  * get all slabs
+{{{
+o.class = IFCSLAB
+}}}
+
+The letter *"o"* refers inside the filter expression to a dummy object and should be written followed be a point before the attributes names
+
+  * get all slab objects which are defined as Roofs
+{{{
+o.class = IFCSLAB and o.predefinedType  = '.ROOF.'
+}}}
+  * get all slab objects which their names contains the word 'Dach' (it means roof in German)
+{{{
+o.class == IFCSLAB and o.name.include?("Dach")
+}}}
+  * get a certain slab through its globalId attribute
+{{{
+o.class == IFCSLAB and o.globalId == "'2WnDGvXIP14xQJyJ3RQPXx'"
+}}}
+
+what about if we like to get a list of all IfcBuildingElement objects, of course we can do the same like above and write such a boring filter expression :
+{{{
+o.class == IFCBUILDINGELEMENTCOMPONENT or
+o.class == IFCBUILDINGELEMENTPART or
+o.class == IFCBUILDINGELEMENTPROXY or
+o.class == IFCCOLUMN or
+o.class == IFCCOVERING or
+o.class == IFCCURTAINWALL or
+o.class == IFCDOOR or
+o.class == IFCFOOTING or
+o.class == .. or
+o.class == .. or
+o.class == .. or
+o.class == IFCWINDOW 
+}}}
+But some magic we can simply write the filter expression like this:
+{{{
+o.class.superclass == IFCBUILDINGELEMENT
+}}}
+
+filter expression can be used to select objects depending on their classes,super classes, and their  attributes values.
+inside the filter expression you can use any valid Ruby method to form a valid logical expression. Following methods and key words are examples of what you can use :
+{{{
+and  (or &&)
+or ( or | )
+not
+nil
+true
+false
+==
+!=
+>
+<
+
+"(" and ")" to put conditions in groups
+
+All String class methods:
+to_i :convert a string to integer
+to_f :conver string to float
+start_with?("")
+include?("")
+size
+}}}
+
+===Note===
+----
+ * Attributes names should start with a small letter.
+
+ * IFC classes should be written in capital letters without ""
+
+ * Filter expressions will be applied only on the selected classes, it means that you have to select at first which classes you are looking inside for the target objects. of course you can click on "Ifc" o the left select list to select all IFC classes.
+----
+
+for most common queries you do not need to know a lot about the IFC schema specification, but the more you know, the less effort you need to write advanced filters.  
+
+
+more examples will be added later
+
+
+
+  
