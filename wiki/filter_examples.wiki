@@ -56,7 +56,6 @@ Here we used our knowledge about the IFC schema specification and the power of m
  
  so again in short words:filter expression can be used to select objects depending on their classes,super classes, and their  attributes values.
 inside the filter expression you can use any valid Ruby method to form a valid logical expression. 
-Following methods and key words are examples of what you can use :
 {{{
 and  (or &&)
 or ( or | )
