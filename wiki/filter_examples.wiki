@@ -54,7 +54,7 @@ o.class.superclass == IFCBUILDINGELEMENT and o.description.size > 2
 }}}
 Here we used our knowledge about the IFC schema specification and the power of meta-programming in Ruby to make our life much more simple.
  
-so again in short word:filter expression can be used to select objects depending on their classes,super classes, and their  attributes values.
+ so again in short words:filter expression can be used to select objects depending on their classes,super classes, and their  attributes values.
 inside the filter expression you can use any valid Ruby method to form a valid logical expression. 
 Following methods and key words are examples of what you can use :
 {{{
