@@ -2,7 +2,7 @@
 
 = User-defined Reports =
 
-IfcWebServer aims to smooth and simply the process of getting information from the IFC-based BIM models.
+*Ifc WebServer* aims to smooth and simply the process of getting information from the IFC-based BIM models.
 
 User-defined reports are a way to allow the user to select which class fields (attribute) he likes to see as HTML reports inside the browser or as XML files to be used for further analysis.
 
