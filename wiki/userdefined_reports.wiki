@@ -1,4 +1,4 @@
-#How to create customized reports (HTML/XML)
+#summary How to create customized reports (HTML/XML)
 
 = User-defined Reports =
 
@@ -38,3 +38,7 @@ Z:coordinates.sub("(","").sub(")","").split(",")[2].to_s|
 if you already know about writing [#filter_examples filter expression]  , you should be not surprised to know that you can use Ruby code inside the user-defined report expression as well :)
 
 In this example we used the "sub" methods to delete ( ) and the "split" method to convert the x,y,z string to an array
+
+for most cases you do not need to know a lot about the IFC schema specification or Ruby, but the more you know, the more you get.
+
+more examples will be added later
