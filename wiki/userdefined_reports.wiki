@@ -35,7 +35,7 @@ Y:coordinates.sub("(","").sub(")","").split(",")[1].to_s|
 Z:coordinates.sub("(","").sub(")","").split(",")[2].to_s|
 }}}
 
-if you already know about writing [#filter_examples filter expression]  , you should be not surprised to know that you can use Ruby code inside the user-defined report expression as well :)
+if you already know about writing [http://code.google.com/p/ifcwebserver/wiki/filter_examples filter expression]  , you should be not surprised to know that you can use Ruby code inside the user-defined report expression as well :)
 
 In this example we used the "sub" methods to delete ( ) and the "split" method to convert the x,y,z string to an array
 
