@@ -1,0 +1,4 @@
+ * add a model tree views to show to hierarchical structure of the objects inside the IFC file
+ ** Containment view
+ ** Containment view (IfcRelAggregates only)
+ ** Containment view (IfcRelCintainedInSpatialStructure only) 
