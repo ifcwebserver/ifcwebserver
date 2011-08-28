@@ -1,5 +1,5 @@
 *28.08.2011*
  * add a model tree views to show to hierarchical structure of the objects inside the IFC file
   ** Containment view: [http://bci52.cib.bau.tu-dresden.de/ifcwebserver/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&q=model_tree demo]
-  ** Containment view (IfcRelAggregates only) [http://bci52.cib.bau.tu-dresden.de/ifcwebserver/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&q=model_tree_IfcRelAggregates demo]
-  ** Containment view (IfcRelCintainedInSpatialStructure only) [http://bci52.cib.bau.tu-dresden.de/ifcwebserver/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&q=model_tree_IfcRelContainedInSpatialStructure demo] 
+  ** Containment view (ifcRelAggregates only) [http://bci52.cib.bau.tu-dresden.de/ifcwebserver/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&q=model_tree_IfcRelAggregates demo]
+  ** Containment view (ifcRelCintainedInSpatialStructure only) [http://bci52.cib.bau.tu-dresden.de/ifcwebserver/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&q=model_tree_IfcRelContainedInSpatialStructure demo] 
