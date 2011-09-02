@@ -28,7 +28,7 @@ Options Indexes FollowSymLinks ExecCGI
 svn checkout http://ifcwebserver.googlecode.com/svn/trunk/ ifcwebserver-read-only
 }}}
  * Change the global variables $ifc_path and $ifc_file_dir_path in the file confg.rb to match your installation path.
- * Start apache server and be sure to enable the cgi-module 
+ * Start Apache server 
  * Open your web browswer at http://127.0.0.1/ifcwebserver
  * Enjoy :)
 ----
