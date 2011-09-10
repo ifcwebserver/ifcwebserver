@@ -1,0 +1,54 @@
+#summary for developers: how to write extensions for IfcWebServer
+
+== How to extend/modfiy IfcWebServer to meet your needs ==
+IfcWebServer is written up from the ground in 100% Ruby code without the need to use any external libraries.
+
+As a final user or a hobby programmer may you wish to add new features or to modify something to meet your needs. The good news here that you don not have to be a professional programmer to be able to write your own extensions. The hard job is already done for you.
+
+All what you need is to understand some simple concepts.
+
+As an example, let us assume that you like to see the colors which are used inside the IFC model as real colors inside your internet browser not only as 3 numbers for Red,Green and Blue ratios as they are defined in the IFC spesification for the class [http://buildingsmart-tech.org/ifc/IFC2x3/TC1/html/ifcpresentationresource/lexical/ifccolourrgb.htm IfcColourRgb]:
+
+{{{
+	
+ENTITY IfcColourRgb
+SUBTYPE OF (	IfcColourSpecification);
+Red	 : 	IfcNormalisedRatioMeasure;
+Green	 : 	IfcNormalisedRatioMeasure;
+Blue	 : 	IfcNormalisedRatioMeasure;
+END_ENTITY;
+}}}
+
+ * Open your favorite text editor and write the Ruby code below
+
+{{{
+class IFCCOLOURRGB
+ def to_RGB_HEX
+  "#" + (sprintf("%02x",@red.to_f*255) + sprintf("%02x", @green.to_f*255) + sprintf("%02x",@blue.to_f*255)).upcase	
+ end
+
+ def to_html_div
+  "<div style=\"background-color:" + to_RGB_HEX + "\">&nbsp;</div>"
+ end
+end
+}}}
+
+ * Login to IfcWebServer using your username/password 
+ * Copy/Paste the Ruby code into "My extensions" textarea in the settings page & save.
+ * Done
+
+now the two new methods *to_html_div* and *to_RGB_HEX* are available and ready to use for all IfcColourRgb object instances.
+
+Try it:
+{{{
+http://bci52.cib.bau.tu-dresden.de/ifcwebserver/ifc.rb?ifc_file=FILENAME&q=IFCCOLOURRGB&report_cols=to_html_div
+}}}
+
+http://bci52.cib.bau.tu-dresden.de/ifcwebserver/ifc.rb?ifc_file=FZK-Haus-AC11-IFC.ifc&report_cols=to_html_div|to_RGB_HEX&q=IFCCOLOURRGB
+
+*Result:*
+
+http://bci52.cib.bau.tu-dresden.de/ifcwebserver/doc/ifcwebServer_RGB_colors.png
+-----
+
+more advanced examples will be add later
