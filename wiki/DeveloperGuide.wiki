@@ -1,13 +1,91 @@
-#summary One-sentence summary of this page.
+#summary Developer's Guide
 
 = Introduction =
 
-Add your content here.
+This guide should help the users to start writing their extensions for IfcWebServer.
+
+All what they need to know is how to deal with the following variables/methods:
+{{{
+#gloabl variables
+$hash
+$ifcObjects
+$full_loading
+#methods
+toIfcObject
+}}}
+
+All code examples based on the sample File :
+{{{
+ISO-10303-21;
+HEADER;
+FILE_DESCRIPTION(('IFC WebServer 1.0 Beta',''),'2;1');
+FILE_NAME('AC10-Institute-Var-1.ifc','',(''),(''),'','','');
+FILE_SCHEMA(('IFC2X3_TC1'));
+ENDSEC;
+
+DATA;
+#5= IFCAPPLICATION(#1,'10.0','ArchiCAD 10.0','ArchiCAD');
+#6= IFCPERSON($,'Undefined',$,$,$,$,$,$);
+#8= IFCORGANIZATION($,'OrganizationName',$,$,$);
+#61= IFCCARTESIANPOINT((15.,0.,-2.5));
+#65= IFCCARTESIANPOINT((0.,0.,-2.5));
+#69= IFCCARTESIANPOINT((15.,-3.,-0.15));
+#93= IFCPOLYLOOP((#61,#65,#69));
+#97= IFCFACEOUTERBOUND(#93,.T.);
+#100= IFCFACE((#97));
+ENDSEC;
+END-ISO-10303-21;
+}}}
+
+= Global variables=
+*$hash*={} a  global hash variable.
+
+It contains all lines of the ifc file
+
+To get the data of any line you must provide the key as a string like this:
+{{{
+$hash["#100"] --> return  "#100= IFCFACE((#97));"
+}}}
+
+*$ifcObjects*={} a  global hash variable.
+
+It contains a reference to all object instances which are already loaded.
+{{{
+if $ifcObjects[100] == nil
+"#100".toIfcObject
+end
+puts $ifcObject[100].class.to_s ---> IFCFACE
+puts $ifcObjects[100].bounds --> (#97)
+}}}
+
+*$full_loading* global variable (boolean )
+default value = *true*
+
+switching the value of this variable between true and false to ask the parser to load or not load all objects inside each line during parsing.
+
+for example :
+{{{
+"#93".toIfcObject --> lines #61, #65, and #69 will be loaded automatically by default.
+}}}
 
 
-= Details =
+= Global  Methods =
+The method *toIfcObject* can be used to load any object through it's line_id inside the IFC file.
+This method extended the basic class "String", so you can easily write:
+Load one object
+{{{
+"#100".toIfcObject
+}}}
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+
+load many objects at once
+{{{
+"#61#65#69#93#97#100".toIfcObjects
+
+or
+
+$full_loading=true
+"#100".toIfcObjects
+the objects with IDs: #61 #65 #69 #93 #97 will be loaded automatically
+}}}
+
