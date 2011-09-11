@@ -14,7 +14,7 @@ $full_loading
 toIfcObject
 }}}
 
-All code examples based on the sample File :
+All code examples based on this sample data :
 {{{
 ISO-10303-21;
 HEADER;
@@ -88,4 +88,3 @@ $full_loading=true
 "#100".toIfcObjects
 the objects with IDs: #61 #65 #69 #93 #97 will be loaded automatically
 }}}
-
