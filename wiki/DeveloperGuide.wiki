@@ -16,6 +16,7 @@ toIfcObject
 
 All code examples based on this sample data :
 ----
+<font size="2">
 ISO-10303-21;<br/>
 HEADER;<br/>
 FILE_DESCRIPTION(('IFC WebServer 1.0 Beta',''),'2;1');<br/>
@@ -33,7 +34,7 @@ DATA;<br/>
 #97= IFCFACEOUTERBOUND(#93,.T.);<br/>
 #100= IFCFACE((#97));<br/>
 ENDSEC;<br/>
-END-ISO-10303-21;<br/>
+END-ISO-10303-21;<br/></font>
 ----
 
 = Global variables=
