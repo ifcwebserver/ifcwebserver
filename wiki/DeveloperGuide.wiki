@@ -15,7 +15,7 @@ toIfcObject
 }}}
 
 All code examples based on this sample data :
-{{{
+----
 ISO-10303-21;
 HEADER;
 FILE_DESCRIPTION(('IFC WebServer 1.0 Beta',''),'2;1');
@@ -35,7 +35,7 @@ DATA;
 #100= IFCFACE((#97));
 ENDSEC;
 END-ISO-10303-21;
-}}}
+----
 
 = Global variables=
 *$hash*={} a  global hash variable.
@@ -72,6 +72,7 @@ for example :
 = Global  Methods =
 The method *toIfcObject* can be used to load any object through it's line_id inside the IFC file.
 This method extended the basic class "String", so you can easily write:
+
 Load one object
 {{{
 "#100".toIfcObject
