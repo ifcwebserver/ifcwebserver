@@ -15,27 +15,26 @@ toIfcObject
 }}}
 
 All code examples based on this sample data :
-----
-<font size="2">
-ISO-10303-21;<br/>
-HEADER;<br/>
-FILE_DESCRIPTION(('IFC WebServer 1.0 Beta',''),'2;1');<br/>
-FILE_NAME('AC10-Institute-Var-1.ifc','',(''),(''),'','','');<br/>
-FILE_SCHEMA(('IFC2X3_TC1'));<br/>
-ENDSEC;<br/>
-DATA;<br/>
-#5= IFCAPPLICATION(#1,'10.0','ArchiCAD 10.0','ArchiCAD');<br/>
-#6= IFCPERSON($,'Undefined',$,$,$,$,$,$);<br/>
-#8= IFCORGANIZATION($,'OrganizationName',$,$,$);<br/>
-#61= IFCCARTESIANPOINT((15.,0.,-2.5));<br/>
-#65= IFCCARTESIANPOINT((0.,0.,-2.5));<br/>
-#69= IFCCARTESIANPOINT((15.,-3.,-0.15));<br/>
-#93= IFCPOLYLOOP((#61,#65,#69));<br/>
-#97= IFCFACEOUTERBOUND(#93,.T.);<br/>
-#100= IFCFACE((#97));<br/>
-ENDSEC;<br/>
-END-ISO-10303-21;<br/></font>
-----
+{{{
+ISO-10303-21;
+HEADER;
+FILE_DESCRIPTION(('IFC WebServer 1.0 Beta',''),'2;1');
+FILE_NAME('AC10-Institute-Var-1.ifc','',(''),(''),'','','');
+FILE_SCHEMA(('IFC2X3_TC1'));
+ENDSEC;
+DATA;
+#5= IFCAPPLICATION(#1,'10.0','ArchiCAD 10.0','ArchiCAD');
+#6= IFCPERSON($,'Undefined',$,$,$,$,$,$);
+#8= IFCORGANIZATION($,'OrganizationName',$,$,$);
+#61= IFCCARTESIANPOINT((15.,0.,-2.5));
+#65= IFCCARTESIANPOINT((0.,0.,-2.5));
+#69= IFCCARTESIANPOINT((15.,-3.,-0.15));
+#93= IFCPOLYLOOP((#61,#65,#69));
+#97= IFCFACEOUTERBOUND(#93,.T.);
+#100= IFCFACE((#97));
+ENDSEC;
+END-ISO-10303-21;
+}}}
 
 = Global variables=
 *$hash*={} a  global hash variable.
