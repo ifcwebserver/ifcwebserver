@@ -2,7 +2,7 @@
 
 == Introduction ==
 
-IfcWebViewer is a part of IfcWebServer Project, however it is still in a beta verion.
+[http://bci52.cib.bau.tu-dresden.de/ifcwebserver/sgl/ IfcWebViewer] is a part of IfcWebServer Project, however it is still in a beta verion.
 
 === Controls ===
 http://bci52.cib.bau.tu-dresden.de/ifcwebserver/doc/IfcWebServer_WebGL_Viewer_howto.png
