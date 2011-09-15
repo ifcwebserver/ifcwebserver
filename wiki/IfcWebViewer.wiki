@@ -1,0 +1,50 @@
+#summary IfcWebViewer
+
+== Introduction ==
+
+IfcWebViewer is a part of IfcWebServer Project, however it is still in a beta verion.
+
+=== Controls ===
+http://bci52.cib.bau.tu-dresden.de/ifcwebserver/doc/IfcWebServer_WebGL_Viewer_howto.png
+
+===How it work?===
+IfcWebServer converts the geometry representation of ifc objects into the  open and standard 3D format "COLLADA". The render takes place in the browser with help of a WebGL script library (http://spidergl.org/).
+
+so you need to use a WebGL enabled browser to be able to use IfcWebViewer  (Google Chrome/Firefox), MS Internet Explorer is NOT supportd.
+
+===Since there are enough free IFC viewers available why we need to reinvent the wheel again ?===
+We are not trying to create a professional ifc web viewer in any case.Viewing big models online will be always a bottle neck for the performance. but we are trying to create a simple viewer to support the idea behind IfcWebServer (getting information about the building model easily) with features like :
+ * show the results of filters/queries directly in the browser for a partial model filters (select/hide operation)
+ * change the color of objects according to their properties for example for validation rules.
+
+IfcWebServer is a web-application, so adding the web browser makes sense as well.
+
+At moment the following ifc geometry classes are supported through native Ruby code extensions:
+{{{
+IFCLINE
+IFCPOLYLINE
+IFCCOMPOSITECURVE
+IFCTRIMMEDCURVE
+IFCRECTANGLEPROFILEDEF
+IFCCIRCLEPROFILEDEF
+IFCARBITRARYCLOSEDPROFILEDEF
+IFCFACEBASEDSURFACEMODEL
+IFCFACE
+IFCFACETEDBREP
+IFCCONNECTEDFACESET
+IFCCLOSEDSHELL
+IFCFACEOUTERBOUND
+IFCBOUNDINGBOX
+IFCSHELLBASEDSURFACEMODEL
+IFCEXTRUDEDAREASOLID
+IFCGRID
+}}}
+
+Any contribution are welcomed to support more classes.
+
+if you need only to view your ifc models using IfcWebViewer without the need to use special features you can convert any ifc model using free tools in easy steps :
+ # Open your ifc file with [http://www.giveawayoftheday.com/soft/4926512/ DDS-CAD 7.3] and export it in 3ds format
+ # import the 3ds into [www.blender.org Blender] and export it again in COLLADA (dae extension)
+ # Upload your file to the IfcWebServer or to any server around the world.
+ # copy the url of your file to the URL input box 
+ # Enjoy
