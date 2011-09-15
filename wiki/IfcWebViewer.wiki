@@ -7,6 +7,24 @@
 === Controls ===
 http://bci52.cib.bau.tu-dresden.de/ifcwebserver/doc/IfcWebServer_WebGL_Viewer_howto.png
 
+
+===Demo Examples===
+here are some online examples and screen shots using the ifc file :
+*AC10-Institute-Var-1.ifc* :
+
+Link:[http://bci52.cib.bau.tu-dresden.de/ifcwebserver/sgl/?url=http%3A%2F%2Fbci52.cib.bau.tu-dresden.de%2Fdae%2FAC10-Institute-Var-1.dae&bgcolor=0.92%2C0.92%2C0.92&filter_hide=Wall&filter_select=Win click here Hide all walls and select all windows]
+
+*Result*
+
+http://bci52.cib.bau.tu-dresden.de/ifcwebserver/doc/WebViewerDemo1.png
+
+
+Link :[http://bci52.cib.bau.tu-dresden.de/ifcwebserver/sgl/?url=http%3A%2F%2Fbci52.cib.bau.tu-dresden.de%2Fdae%2FAC10-Institute-Var-1.dae&bgcolor=0.392%2C0.584%2C0.9294&filter_hide=Roof%2BWindow%2BWall&filter_select=Proxy Hide Roofs+Walls+Window and seclet all Proxy Elements]
+
+*Result:*
+
+http://bci52.cib.bau.tu-dresden.de/ifcwebserver/doc/WebViewerDemo2.png
+
 ===How it work?===
 IfcWebServer converts the geometry representation of ifc objects into the  open and standard 3D format "COLLADA". The render takes place in the browser with help of a WebGL script library (http://spidergl.org/).
 
@@ -16,6 +34,7 @@ so you need to use a WebGL enabled browser to be able to use IfcWebViewer  (Goog
 We are not trying to create a professional ifc web viewer in any case.Viewing big models online will be always a bottle neck for the performance. but we are trying to create a simple viewer to support the idea behind IfcWebServer (getting information about the building model easily) with features like :
  * show the results of filters/queries directly in the browser for a partial model filters (select/hide operation)
  * change the color of objects according to their properties for example for validation rules.
+ * Exchange views between users as links.
 
 IfcWebServer is a web-application, so adding the web browser makes sense as well.
 
