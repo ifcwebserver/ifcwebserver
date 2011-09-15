@@ -2,7 +2,7 @@
 
 == Introduction ==
 
-[http://bci52.cib.bau.tu-dresden.de/ifcwebserver/sgl/ IfcWebViewer] is a part of IfcWebServer Project, however it is still in a beta verion.
+[http://bci52.cib.bau.tu-dresden.de/ifcwebserver/sgl/ IfcWebViewer] is a part of ifcWebServer Project, however it is still in a beta verion.
 
 === Controls ===
 http://bci52.cib.bau.tu-dresden.de/ifcwebserver/doc/IfcWebServer_WebGL_Viewer_howto.png
@@ -21,23 +21,23 @@ IfcWebServer is a web-application, so adding the web browser makes sense as well
 
 At moment the following ifc geometry classes are supported through native Ruby code extensions:
 {{{
-IFCLINE
-IFCPOLYLINE
-IFCCOMPOSITECURVE
-IFCTRIMMEDCURVE
-IFCRECTANGLEPROFILEDEF
-IFCCIRCLEPROFILEDEF
-IFCARBITRARYCLOSEDPROFILEDEF
-IFCFACEBASEDSURFACEMODEL
-IFCFACE
-IFCFACETEDBREP
-IFCCONNECTEDFACESET
-IFCCLOSEDSHELL
-IFCFACEOUTERBOUND
-IFCBOUNDINGBOX
-IFCSHELLBASEDSURFACEMODEL
-IFCEXTRUDEDAREASOLID
-IFCGRID
+IfcLine
+IfcPolyLine
+IfcComposedCurve
+IfcTrimmedCurve
+IfcRectangleProfile
+IfcCircleProfileDef
+IfcArbitraryClosedProfileDef
+IfcFaceBasedSurfaceModel
+IfcFace
+IfcFacedBrep
+IfcConnectedFaceSet
+IfcClosedShell
+IfcFaceOuterBound
+IfcBoundingBox
+IfcShellBasedSurfaceModel
+IfcExtrudeedAreaSolid
+IfcGrid
 }}}
 
 Any contribution are welcomed to support more classes.
