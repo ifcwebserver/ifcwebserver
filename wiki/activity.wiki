@@ -1,3 +1,38 @@
+
+*25.09.2011*
+ *Add the following methods as classes extensions:
+{{{
+IFCARBITRARYCLOSEDPROFILEDEF,IFCCIRCLEPROFILEDEF,IFCCIRCLEHOLLOWPROFILEDEF,IFCRECTANGLEPROFILEDEF:
+area
+diameter
+perimeter
+xyz_array
+to_svg
+
+IFCPROPERTYDEFINITION:
+to_details
+to_details_xml
+
+IFCPOLYLOOP,IFCPOLYLINE:
+to_svg
+to_xy_xml
+to_mesh
+area
+xy_min_max
+
+IFCFACE,IFCFACEBOUND,IFCFACEOUTERBOUND,IFCCLOSEDSHELL:
+to_mesh
+to_dae
+area
+
+IFCRELASSOCIATESMATERIAL:
+QTO / QuantityTakeOff
+
+IFCCOLOURRGB:
+to_html_div
+
+}}}
+ *Start working on an automatic rules checking mechanism [http://bci52.cib.bau.tu-dresden.de/ifcwebserver/generate_rules_file.rb Link]
 *15.09.2011*
  * Provide a public access to the [http://bci52.cib.bau.tu-dresden.de/ifcwebserver/sgl/ IfcWebViewer] and release the source code.
 *10.09.2011*
