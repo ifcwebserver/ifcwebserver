@@ -1,8 +1,8 @@
 #summary for developers: how to write extensions for IfcWebServer
 
 == What are extensions, and why we need them ? ==
-Extensions are classes methods. They extend the functionality of IfcWebServer by adding a new value of the native information inside the IFC file.
-We need them because only the basic information are saved inside the IFC file, but we mostly need to apply filters/queries on derived information.
+Extensions are classes methods. They extend the functionality of [http://code.google.com/p/ifcwebserver IfcWebServer] by adding a new value into the basic information inside the IFC files.
+We need them because only the basic information are saved inside the IFC file, but we often need to apply filters/queries on derived information.
 
 For example all sub classes of [http://buildingsmart-tech.org/ifc/IFC2x3/TC1/html/ifcprofileresource/lexical/ifcparameterizedprofiledef.htm IfcParameterizedProfileDef] contain  the basic information to describe the shape of the profile(like I T U L C , Z Circle,Rectangle) but nothing more or less. 
 
