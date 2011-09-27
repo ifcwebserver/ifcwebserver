@@ -4,7 +4,9 @@
 Extensions are classes methods. They extend the functionality of IfcWebServer by adding a new value of the native information inside the IFC file.
 We need them because only the basic information are saved inside the IFC file, but we mostly need to apply filters/queries on derived information.
 
-For example all sub classes of *[http://buildingsmart-tech.org/ifc/IFC2x3/TC1/html/ifcprofileresource/lexical/ifcparameterizedprofiledef.htm IfcParameterizedProfileDef]* contain  the basic information to describe the shape of the profile(like I T U L C , Z Circle,Rectangle) but nothing more or less. Wouldn't be nice if we have a method called "area" for all of these classes so we can make advanced quires like "give me all building elements which are defined through a parameterized profile and has a section area bigger than 1 ^m2^".
+For example all sub classes of [http://buildingsmart-tech.org/ifc/IFC2x3/TC1/html/ifcprofileresource/lexical/ifcparameterizedprofiledef.htm IfcParameterizedProfileDef] contain  the basic information to describe the shape of the profile(like I T U L C , Z Circle,Rectangle) but nothing more or less. 
+
+Wouldn't be nice if we have a method called "area" for all of these classes so we can make advanced quires like "give me all building elements which are defined through a parameterized profile and has a section area bigger than 1 ^m2^", or create reports include the area value ?
 
 The same for other derived objects properties :volume, area , position , vertices array...
 
