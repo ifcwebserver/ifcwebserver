@@ -1,5 +1,7 @@
 #summary for developers: how to write extensions for IfcWebServer
 
+== What are extensions, and why I need them ? ==
+
 == How to extend/modfiy IfcWebServer to meet your needs ==
 IfcWebServer is written up from the ground in 100% Ruby code without the need to use any external libraries.
 
