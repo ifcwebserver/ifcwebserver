@@ -10,6 +10,8 @@ Wouldn't be nice if we have a method called "area" for all of these classes so w
 
 [http://bci52.cib.bau.tu-dresden.de/ifcwebserver/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&filter=o.area>10&report_cols=area&output_format=to_html&q=IFCARBITRARYCLOSEDPROFILEDEF Demo] : Get all IfcArbitraryClosedProfileDef instances which have a section area bigger than 10 m^2^ in the test file *AC10-Institute-Var-1.ifc*
 
+Result : 97 out of 483
+
 In short words "Extensions" are the added value of native information and a handy way to extended the functionality and the use limits of [http://code.google.com/p/ifcwebserver IfcWebServer].
  
 
