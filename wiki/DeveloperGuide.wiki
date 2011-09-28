@@ -80,11 +80,11 @@ Load one object
 
 load many objects at once
 {{{
-"#61#65#69#93#97#100".toIfcObjects
+"#61#65#69#93#97#100".toIfcObject
 
 or
 
 $full_loading=true
-"#100".toIfcObjects
+"#100".toIfcObject
 the objects with IDs: #61 #65 #69 #93 #97 will be loaded automatically
 }}}
