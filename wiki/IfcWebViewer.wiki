@@ -30,6 +30,8 @@ IfcWebServer converts the geometry representation of ifc objects into the  open 
 
 so you need to use a WebGL enabled browser to be able to use IfcWebViewer  (Google Chrome/Firefox), MS Internet Explorer is NOT supportd.
 
+click here to check if your browser supports WebGL : http://get.webgl.org/
+
 ===Since there are enough free IFC viewers available why we need to reinvent the wheel again ?===
 We are not trying to create a professional ifc web viewer in any case.Viewing big models online will be always a bottle neck for the performance. but we are trying to create a simple viewer to support the idea behind IfcWebServer (getting information about the building model easily) with features like :
  * show the results of filters/queries directly in the browser for a partial model filters (select/hide operation)
