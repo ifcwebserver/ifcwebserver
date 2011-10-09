@@ -6,13 +6,13 @@ We need them because only the basic information are saved inside the IFC file, b
 
 For example all sub classes of [http://buildingsmart-tech.org/ifc/IFC2x3/TC1/html/ifcprofileresource/lexical/ifcparameterizedprofiledef.htm IfcParameterizedProfileDef] contain  the basic information to describe the shape of the profile(like I T U L C Z Circle,Rectangle) but nothing more or less. 
 
-Wouldn't be nice if we have a method called "area" for all of these classes so we can make advanced quires like "give me all building elements which are defined through a parameterized profile and has a section area bigger than 1 m^2^", or create reports include the profile section area?
+Wouldn't be nice if we have a method called "area" for all of these classes so we can make advanced quires like "give me all building elements which are defined through a parameterized profile and have a section area bigger than 1 m^2^", or create reports include the profile section area?
 
 [http://www.ifcwebserver.org/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&filter=o.area>10&report_cols=area&output_format=to_html&q=IFCARBITRARYCLOSEDPROFILEDEF Demo] : Get all ifcArbitraryClosedProfileDef instances which have a section area bigger than 10 m^2^ in the test file 'AC10-Institute-Var-1.ifc'
 
 Result : 97 out of 483
 
-In short words "Extensions" are the added value of native information and a handy way to extended the functionality and the use limits of [http://code.google.com/p/ifcwebserver IfcWebServer].
+In short words "Extensions" are the added value of the basic information and a handy way to extended the functionality of [http://code.google.com/p/ifcwebserver IfcWebServer]easily.
  
 
 == How to extend/modfiy IfcWebServer ==
