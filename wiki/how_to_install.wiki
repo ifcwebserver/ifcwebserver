@@ -32,6 +32,6 @@ svn checkout http://ifcwebserver.googlecode.com/svn/trunk/ ifcwebserver-read-onl
  * Open your web browswer at http://127.0.0.1/ifcwebserver
  * Enjoy :)
 ----
-== Test IFCWebServer without installing ==
+== Try IFCWebServer without installing ==
 
- [http://bci52.cib.bau.tu-dresden.de/ifcwebserver/ Demo Server]
+ http://www.ifcwebserver.org 
