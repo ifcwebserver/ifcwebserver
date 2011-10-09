@@ -12,7 +12,7 @@ Wouldn't be nice if we have a method called "area" for all of these classes so w
 
 Result : 97 out of 483
 
-In short words "Extensions" are the added value of the basic information and a handy way to extended the functionality of [http://code.google.com/p/ifcwebserver IfcWebServer]easily.
+In short words "Extensions" are the added value of the basic information and a handy way to extended the functionality of [http://code.google.com/p/ifcwebserver IfcWebServer] easily.
  
 
 == How to extend/modfiy IfcWebServer ==
