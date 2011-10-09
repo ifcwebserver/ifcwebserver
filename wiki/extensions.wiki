@@ -22,7 +22,23 @@ As a final user may you wish to add new features or to modify something to meet 
 
 All what you need is to understand some simple concepts.
 
-As an example, let us assume that you like to see the colors which are used inside the IFC model as real colors inside your internet browser not only as 3 numbers for Red,Green and Blue ratios as they are defined in the IFC spesification for the class [http://buildingsmart-tech.org/ifc/IFC2x3/TC1/html/ifcpresentationresource/lexical/ifccolourrgb.htm IfcColourRgb]:
+As a first example, let us assume that you need to use the area value of windows and doors inside your queries/reports.According to the IFC specification the area is not saved inside the IFC files, but it can be calculated simply through the attributes "overallHeight" and "overallWidth", so here here are our simple extension methods
+{{{
+class IFCWINDOW 
+  def area
+  @overallHeight.to_f*@overallWidth.to_f
+  end
+end
+class IFCDOOR 
+  def area
+  @overallHeight.to_f*@overallWidth.to_f
+  end
+end
+}}}
+Now the method "area" is available for all object instances of IfcWindow and IfcDoor and can be used inside the filter expressions or to be included inside reports.
+
+
+The second example allow us to see the colors which are used inside the IFC model inside the internet browser.IFC spesification for the class [http://buildingsmart-tech.org/ifc/IFC2x3/TC1/html/ifcpresentationresource/lexical/ifccolourrgb.htm IfcColourRgb] defines colours as 3 numbers for Red,Green and Blue ratios:
 
 {{{
 ENTITY IfcColourRgb
@@ -33,8 +49,7 @@ Blue	 : 	IfcNormalisedRatioMeasure;
 END_ENTITY;
 }}}
 
- * Open your favorite text editor and write the Ruby code below
-
+The extension code may look like this :
 <code language="Ruby">
 class IFCCOLOURRGB
  def to_RGB_HEX
@@ -45,10 +60,7 @@ class IFCCOLOURRGB
  end
 end
 </code>
- * Login to IfcWebServer using your username/password 
- * Copy/Paste the Ruby code into "My extensions" textarea in the settings page & save.
- * Done
-
+ 
 now the two new methods *to_html_div* and *to_RGB_HEX* are available and ready to use for all IfcColourRgb object instances.
 
 Try it:
