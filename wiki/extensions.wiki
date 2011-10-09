@@ -26,12 +26,13 @@ As a first example, let us assume that you need to use the area value of windows
 {{{
 class IFCWINDOW 
   def area
-  @overallHeight.to_f*@overallWidth.to_f
+   @overallHeight.to_f*@overallWidth.to_f
   end
 end
+
 class IFCDOOR 
   def area
-  @overallHeight.to_f*@overallWidth.to_f
+   @overallHeight.to_f*@overallWidth.to_f
   end
 end
 }}}
