@@ -16,9 +16,9 @@ In short words "Extensions" are the added value of the basic information and a h
  
 
 == How to extend/modfiy IfcWebServer ==
-IfcWebServer is written up from the ground in 100% Ruby code without the need to use any external libraries.
+IfcWebServer is written in 100% Ruby code without the need to use any external libraries.
 
-As a final user or a hobby programmer may you wish to add new features or to modify something to meet your needs. The good news here that you don not have to be a professional programmer to be able to write your own extensions. The hard job is already done for you.
+As a final user may you wish to add new features or to modify something to meet your needs. The good news here that you don not have to be a professional programmer to be able to write your own extensions. The hard job is already done for you.
 
 All what you need is to understand some simple concepts.
 
