@@ -2,6 +2,7 @@
 These examples are listed to explain how to implement schema rules as Ruby methods.
 Each IFC class could have a method called _validate_rules_
 
+The number of rules in the IFC2x3 is about 339 rules, most of them are not so complex, so to avoid writing a lot of code we are trying to evaluate the rules automatically.
 
  # IfcActorRole 
 {{{
