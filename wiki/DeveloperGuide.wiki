@@ -75,6 +75,8 @@ This method extended the basic class "String", so you can easily write:
 Load one object
 {{{
 "#100".toIfcObject
+or
+"#100".to_obj 
 }}}
 
 
@@ -97,31 +99,29 @@ the objects with IDs: #61 #65 #69 #93 #97 will be loaded automatically
 
 $cgi
 
-$report_cols
+$report_cols:string
 
-$filter
+$filter:string
 
 $username
 
-$debug_time
+$log: hash
 
-$log
-
-$res
+$res: hash
 
 $ifc_file_name 
 
 $ifc_files
 
-$output_format
+$output_format : to_html , to_xml , to_dae
 
-$auto_to_svg
+$auto_to_svg : true/false
 
-$auto_to_dae
+$auto_to_dae: true/false
 
-$dae_single_file
+$dae_single_file: true/false
 
-$dae_geometry_file
+$dae_geometry_file: true/false
 
 $dae_node_file
 
@@ -129,19 +129,19 @@ $resultFile
 
 $ifcUnit["Length"]
 
-$ifcObjects
+$ifcObjects : hash
 
-$points
+$points: hash
 
-$hash
+$hash: hash
 
-$parent
+$parent: hash
 
 $num_of_objects
 
-$full_loading
+$full_loading: true/false
 
-$ifcClassesNames
+$ifcClassesNames: hash
 
 $report_cols_by_class={}
 
@@ -171,22 +171,22 @@ $default_schema
 * User settings
 ----
 
-$rules_validation= true
+$rules_validation: true/false
 
-$use_cache
+$use_cache: true/false
 
 $cache_IfcPropertySet_as_HTML
 
-$max_limit_html
+$max_limit_html: integer
 
 $ext_attribute ="area|area_side|volume|perimeter"
 
-$inline_propertyset
+$inline_propertyset: true/false
 
-$no_list_classes
+$no_list_classes: string
 
-$safe_loading
+$safe_loading: true/false
 
 $after_upload ="objects_list" #other options :viewer  tree objects_list
 
-$debug=false
+$debug: true/false
