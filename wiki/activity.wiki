@@ -1,13 +1,13 @@
 
-
-* 06.10.2011
+*06.10.2011*
  * www.ifcwebserver.org is up
 
-* 03.10.2011
+*03.10.2011*
  * Adding support for _IFC20_longform_ schema(Issue date:March 16, 1999)
 
 *15.09.2011*
  * Provide a public access to the [http://bci52.cib.bau.tu-dresden.de/ifcwebserver/sgl/ IfcWebViewer] and release the source code.
+
 *10.09.2011*
  * Compare multiple IFC files
     ** This feature allows the user to compare multiple files at the level of number of IFC objects for each IFC class. 
