@@ -61,7 +61,7 @@ END_ENTITY;
 }}}
 
 The extension code may look like this :
-<code language="Ruby">
+{{{
 class IFCCOLOURRGB
   def to_RGB_HEX
    "#" + (sprintf("%02x",@red.to_f*255) + sprintf("%02x", @green.to_f*255) + sprintf("%02x",@blue.to_f*255)).upcase	
@@ -71,7 +71,7 @@ class IFCCOLOURRGB
    "<div style=\"background-color:" + to_RGB_HEX + "\">&nbsp;</div>"
   end
 end
-</code>
+}}}
  
 now the two new methods *to_html_div* and *to_RGB_HEX* are available and ready to use for all IfcColourRgb object instances.
 
