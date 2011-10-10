@@ -82,5 +82,4 @@ http://www.ifcwebserver.org/ifc.rb?ifc_file=FZK-Haus-AC11-IFC.ifc&report_cols=to
 http://www.ifcwebserver.org/ifc.rb?ifc_file=FZK-Haus-AC11-IFC.ifc&report_cols=to_html_div|to_RGB_HEX&q=IFCCOLOURRGB
 
 *Result:*
-
-http://141.30.165.52/ifcwebserver/doc/ifcwebServer_RGB_colors.png
+http://ifcwebserver.googlecode.com/svn/doc/IfcWebServer_RGB_colors.png
