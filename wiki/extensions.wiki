@@ -84,4 +84,3 @@ http://www.ifcwebserver.org/ifc.rb?ifc_file=FZK-Haus-AC11-IFC.ifc&report_cols=to
 *Result:*
 
 http://141.30.165.52/ifcwebserver/doc/ifcwebServer_RGB_colors.png
------
