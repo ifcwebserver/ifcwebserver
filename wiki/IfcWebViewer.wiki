@@ -12,14 +12,14 @@ http://bci52.cib.bau.tu-dresden.de/ifcwebserver/doc/IfcWebServer_WebGL_Viewer_ho
 here are some online examples and screen shots using the ifc file :
 *AC10-Institute-Var-1.ifc* :
 
-Link:[http://www.ifcwebserver.org/sgl/?url=http%3A%2F%2Fbci52.cib.bau.tu-dresden.de%2Fdae%2FAC10-Institute-Var-1.dae&bgcolor=0.92%2C0.92%2C0.92&filter_hide=Wall&filter_select=Win click here Hide all walls and select all windows]
+Link:[http://bci52.cib.bau.tu-dresden.de/ifcwebserver/sgl/?url=http%3A%2F%2Fbci52.cib.bau.tu-dresden.de%2Fdae%2FAC10-Institute-Var-1.dae&bgcolor=0.92%2C0.92%2C0.92&filter_hide=Wall&filter_select=Win click here Hide all walls and select all windows]
 
 *Result*
 
 http://bci52.cib.bau.tu-dresden.de/ifcwebserver/doc/WebViewerDemo1.png
 
 
-Link :[http://www.ifcwebserver.org/sgl/?url=http%3A%2F%2Fbci52.cib.bau.tu-dresden.de%2Fdae%2FAC10-Institute-Var-1.dae&bgcolor=0.392%2C0.584%2C0.9294&filter_hide=Roof%2BWindow%2BWall&filter_select=Proxy Hide Roofs+Walls+Window and seclet all Proxy Elements]
+Link :[http://bci52.cib.bau.tu-dresden.de/ifcwebserver/sgl/?url=http%3A%2F%2Fbci52.cib.bau.tu-dresden.de%2Fdae%2FAC10-Institute-Var-1.dae&bgcolor=0.392%2C0.584%2C0.9294&filter_hide=Roof%2BWindow%2BWall&filter_select=Proxy Hide Roofs+Walls+Window and seclet all Proxy Elements]
 
 *Result:*
 
