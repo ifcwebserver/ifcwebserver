@@ -11,14 +11,14 @@ $hash
 $ifcObjects
 $full_loading
 #methods
-toIfcObject
+toIfcObject / to_obj
 }}}
 
 All code examples based on this sample data :
 {{{
 ISO-10303-21;
 HEADER;
-FILE_DESCRIPTION(('IFC WebServer 1.0 Beta',''),'2;1');
+FILE_DESCRIPTION(('IFC WebServer 1.0',''),'2;1');
 FILE_NAME('AC10-Institute-Var-1.ifc','',(''),(''),'','','');
 FILE_SCHEMA(('IFC2X3_TC1'));
 ENDSEC;
