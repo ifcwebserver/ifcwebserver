@@ -5,7 +5,7 @@
  * Adding support for _IFC20_longform_ schema(Issue date:March 16, 1999)
 
 *15.09.2011*
- * Provide a public access to the [http://bci52.cib.bau.tu-dresden.de/ifcwebserver/sgl/ IfcWebViewer] and release the source code.
+ * Provide a public access to the [http://www.ifcwebserver.org/sgl/ IfcWebViewer] and release the source code.
 
 *10.09.2011*
  * Compare multiple IFC files
