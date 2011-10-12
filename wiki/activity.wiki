@@ -1,4 +1,3 @@
-
 *06.10.2011*
  * www.ifcwebserver.org is up
 
@@ -11,7 +10,7 @@
 *10.09.2011*
  * Compare multiple IFC files
     ** This feature allows the user to compare multiple files at the level of number of IFC objects for each IFC class. 
-      Demo link :[http://bci52.cib.bau.tu-dresden.de/ifcwebserver/ifc.rb?ifc_file=BIMBUZZ_Singapore2011_openbimlab_After_12_hours.ifc|BIMBUZZ_Singapore2011_openbimlab_After_16_hours.ifc|BIMBUZZ_Singapore2011_openbimlab_After_20_hours.ifc|BIMBUZZ_Singapore2011_openbimlab_After_24_hours.ifc&q=objects_list BIMBUZZ2011_OpenBIM_Lab] or as [http://bci52.cib.bau.tu-dresden.de/ifcwebserver/doc/ifcwebserver_simple_compare.png screenshot]
+      Demo :[http://www.ifcwebserver.org/doc/ifcwebserver_simple_compare.png screenshot]
    ** How it works ?
   Select the files which u like to compare from the files list (click ctrl or shift to select them) then press "Go" button
 
@@ -24,15 +23,15 @@
 
 *28.08.2011*
  * Add model tree views (hierarchical structure of the objects)
-  ** Containment view: [http://bci52.cib.bau.tu-dresden.de/ifcwebserver/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&q=model_tree demo]
+  ** Containment view: [http://www.ifcwebserver.org/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&q=model_tree demo]
 {{{
 URL syntax: http://server/ifcwebserver/ifc.rb?ifc_file=xxx.ifc&q=model_tree
 }}}
-  ** Containment view (ifcRelAggregates only) [http://bci52.cib.bau.tu-dresden.de/ifcwebserver/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&q=model_tree_IfcRelAggregates demo]
+  ** Containment view (ifcRelAggregates only) [http://www.ifcwebserver.org/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&q=model_tree_IfcRelAggregates demo]
 {{{
 URL syntax: http://server/ifcwebserver/ifc.rb?ifc_file=xxx.ifc&q=model_tree_IfcRelAggregates
 }}}
-  ** Containment view (ifcRelCintainedInSpatialStructure only) [http://bci52.cib.bau.tu-dresden.de/ifcwebserver/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&q=model_tree_IfcRelContainedInSpatialStructure demo]
+  ** Containment view (ifcRelCintainedInSpatialStructure only) [http://www.ifcwebserver.org/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&q=model_tree_IfcRelContainedInSpatialStructure demo]
 {{{
 URL syntax: 
 http://server/ifcwebserver/ifc.rb?ifc_file=xxx.ifc&q=model_tree_IfcRelContainedInSpatialStructure
