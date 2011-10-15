@@ -5,8 +5,7 @@
 [http://www.ifcwebserver.org/sgl/ IfcWebViewer] is a part of ifcWebServer Project, however it is still in a beta verion.
 
 === Controls ===
-http://www.ifcwebserver.org/doc/IfcWebServer_WebGL_Viewer_howto.png
-
+http://ifcwebserver.googlecode.com/svn/doc/IfcWebServer_WebGL_Viewer_howto.png
 
 ===Demo Examples===
 here are some online examples and screen shots using the ifc file :
@@ -14,12 +13,14 @@ here are some online examples and screen shots using the ifc file :
 
 *Result*
 
-http://www.ifcwebserver.org/doc/WebViewerDemo1.png
+
+http://ifcwebserver.googlecode.com/svn/doc/WebViewerDemo1.png
+
 
 
 *Result:*
+http://ifcwebserver.googlecode.com/svn/doc/WebViewerDemo2.png
 
-http://www.ifcwebserver.org/doc/WebViewerDemo2.png
 
 ===How it work?===
 IfcWebServer converts the geometry representation of ifc objects into the  open and standard 3D format "COLLADA". The render takes place in the browser with help of a WebGL script library (http://spidergl.org/).
