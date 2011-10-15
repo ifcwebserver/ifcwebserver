@@ -2,7 +2,7 @@
 
 == Introduction ==
 
-[http://www.ifcwebserver.org/sgl/ IfcWebViewer] is a part of ifcWebServer Project, however it is still in a beta verion.
+IfcWebViewer is a part of ifcWebServer Project, however it is still in a beta verion.
 
 === Controls ===
 http://ifcwebserver.googlecode.com/svn/doc/IfcWebServer_WebGL_Viewer_howto.png
@@ -37,26 +37,6 @@ We are not trying to create a professional ifc web viewer in any case.Viewing bi
 
 IfcWebServer is a web-application, so adding the web browser makes sense as well.
 
-At moment the following ifc geometry classes are supported through native Ruby code extensions:
-{{{
-IfcLine
-IfcPolyLine
-IfcComposedCurve
-IfcTrimmedCurve
-IfcRectangleProfile
-IfcCircleProfileDef
-IfcArbitraryClosedProfileDef
-IfcFaceBasedSurfaceModel
-IfcFace
-IfcFacedBrep
-IfcConnectedFaceSet
-IfcClosedShell
-IfcFaceOuterBound
-IfcBoundingBox
-IfcShellBasedSurfaceModel
-IfcExtrudeedAreaSolid
-IfcGrid
-}}}
 
 if you need only to view your ifc models using [http://www.ifcwebserver.org/sgl/ IfcWebViewer] without the need to use special features you can convert any ifc model using free tools in easy steps :
  # Open your ifc file with [http://www.giveawayoftheday.com/soft/4926512/ DDS-CAD 7.3] and export it in 3ds format
