@@ -8,7 +8,7 @@ For example all sub classes of [http://buildingsmart-tech.org/ifc/IFC2x3/TC1/htm
 
 Wouldn't be nice if we have a method called "area" for all of these classes so we can make advanced quires like "give me all building elements which are defined through a parameterized profile and have a section area bigger than 1 m^2^", or create reports include the profile section area?
 
-[http://www.ifcwebserver.org/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&filter=o.area>10&report_cols=area&output_format=to_html&q=IFCARBITRARYCLOSEDPROFILEDEF Demo] : Get all ifcArbitraryClosedProfileDef instances which have a section area bigger than 10 m^2^ in the test file 'AC10-Institute-Var-1.ifc'
+[http://demo.ifcwebserver.org/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&filter=o.area>10&report_cols=area&output_format=to_html&q=IFCARBITRARYCLOSEDPROFILEDEF Demo] : Get all ifcArbitraryClosedProfileDef instances which have a section area bigger than 10 m^2^ in the test file 'AC10-Institute-Var-1.ifc'
 
 Result : 97 out of 483
 
@@ -41,9 +41,9 @@ Try it :
 
  * Get a list contains the area value of all doors and windows in the IFC model "AC10-Institute-Var-1.ifc":
 
-http://www.ifcwebserver.org/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&report_cols=area&q=IFCDOOR|IFCWINDOW
+http://demo.ifcwebserver.org/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&report_cols=area&q=IFCDOOR|IFCWINDOW
  * Create a report for all doors which have area > 3 m^2^ 
-http://www.ifcwebserver.org/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&filter=o.area>3&report_cols=globalId|line_id|name|area&q=IFCDOOR
+http://demo.ifcwebserver.org/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&filter=o.area>3&report_cols=globalId|line_id|name|area&q=IFCDOOR
 
 *Result:* 10 out of 77 doors
 
@@ -76,10 +76,10 @@ now the two new methods *to_html_div* and *to_RGB_HEX* are available and ready t
 
 Try it:
 {{{
-http://www.ifcwebserver.org/ifc.rb?ifc_file=FZK-Haus-AC11-IFC.ifc&report_cols=to_html_div|to_RGB_HEX&q=IFCCOLOURRGB
+http://demo.ifcwebserver.org/ifc.rb?ifc_file=FZK-Haus-AC11-IFC.ifc&report_cols=to_html_div|to_RGB_HEX&q=IFCCOLOURRGB
 }}}
 
-http://www.ifcwebserver.org/ifc.rb?ifc_file=FZK-Haus-AC11-IFC.ifc&report_cols=to_html_div|to_RGB_HEX&q=IFCCOLOURRGB
+http://demo.ifcwebserver.org/ifc.rb?ifc_file=FZK-Haus-AC11-IFC.ifc&report_cols=to_html_div|to_RGB_HEX&q=IFCCOLOURRGB
 
 *Result:*
 
