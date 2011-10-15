@@ -5,12 +5,12 @@
  * Adding support for _IFC20_longform_ schema(Issue date:March 16, 1999)
 
 *15.09.2011*
- * Provide a public access to the [http://www.ifcwebserver.org/sgl/ IfcWebViewer] and release the source code.
+ * Provide a public access to the [http://demo.ifcwebserver.org/sgl/ IfcWebViewer] and release the source code.
 
 *10.09.2011*
  * Compare multiple IFC files
     ** This feature allows the user to compare multiple files at the level of number of IFC objects for each IFC class. 
-      Demo :[http://www.ifcwebserver.org/doc/ifcwebserver_simple_compare.png screenshot]
+      Demo :[http://demo.ifcwebserver.org/doc/ifcwebserver_simple_compare.png screenshot]
    ** How it works ?
   Select the files which u like to compare from the files list (click ctrl or shift to select them) then press "Go" button
 
@@ -23,15 +23,15 @@
 
 *28.08.2011*
  * Add model tree views (hierarchical structure of the objects)
-  ** Containment view: [http://www.ifcwebserver.org/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&q=model_tree demo]
+  ** Containment view: [http://demo.ifcwebserver.org/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&q=model_tree demo]
 {{{
 URL syntax: http://server/ifcwebserver/ifc.rb?ifc_file=xxx.ifc&q=model_tree
 }}}
-  ** Containment view (ifcRelAggregates only) [http://www.ifcwebserver.org/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&q=model_tree_IfcRelAggregates demo]
+  ** Containment view (ifcRelAggregates only) [http://demo.ifcwebserver.org/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&q=model_tree_IfcRelAggregates demo]
 {{{
 URL syntax: http://server/ifcwebserver/ifc.rb?ifc_file=xxx.ifc&q=model_tree_IfcRelAggregates
 }}}
-  ** Containment view (ifcRelCintainedInSpatialStructure only) [http://www.ifcwebserver.org/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&q=model_tree_IfcRelContainedInSpatialStructure demo]
+  ** Containment view (ifcRelCintainedInSpatialStructure only) [http://demo.ifcwebserver.org/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&q=model_tree_IfcRelContainedInSpatialStructure demo]
 {{{
 URL syntax: 
 http://server/ifcwebserver/ifc.rb?ifc_file=xxx.ifc&q=model_tree_IfcRelContainedInSpatialStructure
