@@ -10,7 +10,7 @@
 *10.09.2011*
  * Compare multiple IFC files
     ** This feature allows the user to compare multiple files at the level of number of IFC objects for each IFC class. 
-      Demo :[http://demo.ifcwebserver.org/doc/ifcwebserver_simple_compare.png screenshot]
+      Demo :[http://ifcwebserver.googlecode.com/svn/doc/ifcwebserver_simple_compare.png screenshot]
    ** How it works ?
   Select the files which u like to compare from the files list (click ctrl or shift to select them) then press "Go" button
 
