@@ -23,15 +23,15 @@
 
 *28.08.2011*
  * Add model tree views (hierarchical structure of the objects)
-  ** Containment view: [http://demo.ifcwebserver.org/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&q=model_tree demo]
+  ** Containment view
 {{{
 URL syntax: http://server/ifcwebserver/ifc.rb?ifc_file=xxx.ifc&q=model_tree
 }}}
-  ** Containment view (IfcRelAggregates only) [http://demo.ifcwebserver.org/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&q=model_tree_IfcRelAggregates demo]
+  ** Containment view (IfcRelAggregates only) 
 {{{
 URL syntax: http://server/ifcwebserver/ifc.rb?ifc_file=xxx.ifc&q=model_tree_IfcRelAggregates
 }}}
-  ** Containment view (IfcRelContainedInSpatialStructure only) [http://demo.ifcwebserver.org/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&q=model_tree_IfcRelContainedInSpatialStructure demo]
+  ** Containment view (IfcRelContainedInSpatialStructure only) 
 {{{
 URL syntax: 
 http://server/ifcwebserver/ifc.rb?ifc_file=xxx.ifc&q=model_tree_IfcRelContainedInSpatialStructure
