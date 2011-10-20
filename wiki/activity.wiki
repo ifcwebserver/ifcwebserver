@@ -27,11 +27,11 @@
 {{{
 URL syntax: http://server/ifcwebserver/ifc.rb?ifc_file=xxx.ifc&q=model_tree
 }}}
-  ** Containment view (ifcRelAggregates only) [http://demo.ifcwebserver.org/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&q=model_tree_IfcRelAggregates demo]
+  ** Containment view (IfcRelAggregates only) [http://demo.ifcwebserver.org/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&q=model_tree_IfcRelAggregates demo]
 {{{
 URL syntax: http://server/ifcwebserver/ifc.rb?ifc_file=xxx.ifc&q=model_tree_IfcRelAggregates
 }}}
-  ** Containment view (ifcRelCintainedInSpatialStructure only) [http://demo.ifcwebserver.org/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&q=model_tree_IfcRelContainedInSpatialStructure demo]
+  ** Containment view (IfcRelContainedInSpatialStructure only) [http://demo.ifcwebserver.org/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&q=model_tree_IfcRelContainedInSpatialStructure demo]
 {{{
 URL syntax: 
 http://server/ifcwebserver/ifc.rb?ifc_file=xxx.ifc&q=model_tree_IfcRelContainedInSpatialStructure
