@@ -2,13 +2,13 @@
 
 == Introduction ==
 
-IfcWebViewer is a part of ifcWebServer Project, however it is still in a beta verion.
+IfcWebViewer is a part of ifcWebServer project, however it is still in a beta version.
 
 === Controls ===
 http://ifcwebserver.googlecode.com/svn/doc/IfcWebServer_WebGL_Viewer_howto.png
 
 ===Demo Examples===
-here are some online examples and screen shots using the ifc file :
+here are some online examples and screen shots using the IFC file :
 *AC10-Institute-Var-1.ifc* :
 
 *Result*
@@ -24,14 +24,14 @@ http://ifcwebserver.googlecode.com/svn/doc/WebViewerDemo2.png
 
 
 ===How it work?===
-IfcWebServer converts the geometry representation of ifc objects into the  open and standard 3D format "COLLADA". The render takes place in the browser with help of a WebGL script library (http://spidergl.org/).
+IfcWebServer converts the geometry representation of IFC objects into the  open and standard 3D format "COLLADA". The render takes place in the browser with help of a WebGL script library (http://spidergl.org/).
 
 so you need to use a WebGL enabled browser to be able to use IfcWebViewer  (Google Chrome/Firefox), MS Internet Explorer is NOT supportd.
 
 click here to check if your browser supports WebGL : http://get.webgl.org/
 
 ===Since there are enough free IFC viewers available why we need to reinvent the wheel again ?===
-We are not trying to create a professional ifc web viewer in any case.Viewing big models online will be always a bottle neck for the performance. but we are trying to create a simple viewer to support the idea behind IfcWebServer (getting information about the building model easily) with features like :
+We are not trying to create a professional IFC web viewer in any case.Viewing big models online will be always a bottle neck for the performance. but we are trying to create a simple viewer to support the idea behind IfcWebServer (getting information about the building model easily) with features like :
  * show the results of filters/queries directly in the browser for a partial model filters (select/hide operation)
  * change the color of objects according to their properties for example for validation rules.
  * Exchange views between users as links.
