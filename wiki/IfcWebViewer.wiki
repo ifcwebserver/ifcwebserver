@@ -22,6 +22,8 @@ http://ifcwebserver.googlecode.com/svn/doc/WebViewerDemo1.png
 
 http://ifcwebserver.googlecode.com/svn/doc/WebViewerDemo2.png
 
+[http://bci52.cib.bau.tu-dresden.de/ifcwebserver/doc/3D_BIM_info.html List of online BIM models]
+
 
 ===How it work?===
 IfcWebServer converts the geometry representation of IFC objects into the  open and standard 3D format "COLLADA". The render takes place in the browser with help of the Spider WebGL Java script library (http://spidergl.org/).
