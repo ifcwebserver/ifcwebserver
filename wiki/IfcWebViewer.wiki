@@ -32,16 +32,16 @@ You need to have a WebGL enabled browser to be able to use IfcWebViewer  (Google
 
 click here to check if your browser supports WebGL : http://get.webgl.org/
 
-===Since there are enough free IFC viewers available why we need to reinvent the wheel again ?===
-We are not trying to create a professional IFC web viewer in any case.Viewing big models online will be always a bottle neck for the performance. but we are trying to create a simple viewer to support the idea behind IfcWebServer (getting information about the building model easily) with features like :
- * show the results of filters/queries directly in the browser for a partial model filters (select/hide operation)
- * change the color of objects according to their properties for example for validation rules.
+===Since there are enough free IFC viewers available why we need to reinvent the wheel ?===
+We are not trying to create a professional IFC Web-viewer .Viewing big models online will be always a bottle neck for the performance. We aims to create a simple viewer to support the idea behind IfcWebServer (getting information about the building model easily) with additional  features like:
+ * Show the results of filters/queries directly in the browser for a partial model filters (select/hide operation)
+ * Change the color of objects according to their properties for example for validation rules.
  * Exchange views between users as links.
 
 IfcWebServer is a web-application, so adding the web browser makes sense as well.
 
-if you need only to view your IFC models using [http://www.ifcwebserver.org/sgl/ IfcWebViewer] without the need to use special features you can convert any model using free tools in easy steps :
- # Open your IFC file with [http://www.giveawayoftheday.com/soft/4926512/ DDS-CAD 7.3] and export it in 3ds format
- # import the 3ds into [http://www.blender.org Blender] and export it again in COLLADA (dae extension)
- # Upload the dae file to the IfcWebServer server the same way you upload IFC files
- # Open IfcWebViewer and select your file from the files drop down list
+If you need only to view your IFC models using [http://www.ifcwebserver.org/sgl/ IfcWebViewer] without the need to use special features you can convert then upload your model using free tools in easy steps :
+ # Open your IFC file with [ftp://ftp.dds.no/pub/install/IfcViewer/DDSViewer.exe DDS-Viewer ] and export it in 3ds format
+ # import the 3ds file into [http://www.blender.org Blender] and export it again in COLLADA format(dae extension)
+ # Upload the dae file to the IfcWebServer server 
+ # Open IfcWebViewer and select your file from the drop down list
