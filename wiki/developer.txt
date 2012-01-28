@@ -1,0 +1,192 @@
+#summary Developer's Guide
+
+= Introduction =
+
+This guide should help the users to start writing their extensions for IfcWebServer.
+
+All what they need to know is how to deal with the following variables/methods:
+{{{
+#gloabl variables
+$hash
+$ifcObjects
+$full_loading
+#methods
+toIfcObject / to_obj
+}}}
+
+All code examples based on this sample data :
+{{{
+ISO-10303-21;
+HEADER;
+FILE_DESCRIPTION(('IFC WebServer 1.0',''),'2;1');
+FILE_NAME('AC10-Institute-Var-1.ifc','',(''),(''),'','','');
+FILE_SCHEMA(('IFC2X3_TC1'));
+ENDSEC;
+DATA;
+#5= IFCAPPLICATION(#1,'10.0','ArchiCAD 10.0','ArchiCAD');
+#6= IFCPERSON($,'Undefined',$,$,$,$,$,$);
+#8= IFCORGANIZATION($,'OrganizationName',$,$,$);
+#61= IFCCARTESIANPOINT((15.,0.,-2.5));
+#65= IFCCARTESIANPOINT((0.,0.,-2.5));
+#69= IFCCARTESIANPOINT((15.,-3.,-0.15));
+#93= IFCPOLYLOOP((#61,#65,#69));
+#97= IFCFACEOUTERBOUND(#93,.T.);
+#100= IFCFACE((#97));
+ENDSEC;
+END-ISO-10303-21;
+}}}
+
+= Global variables=
+*$hash*={} a  global hash variable.
+
+It contains all lines of the ifc file
+
+To get the data of any line you must provide the key as a string like this:
+{{{
+$hash["#100"] --> return  "#100= IFCFACE((#97));"
+}}}
+
+*$ifcObjects*={} a  global hash variable.
+
+It contains a reference to all object instances which are already loaded.
+{{{
+if $ifcObjects[100] == nil
+"#100".toIfcObject
+end
+puts $ifcObject[100].class.to_s ---> IFCFACE
+puts $ifcObjects[100].bounds --> (#97)
+}}}
+
+*$full_loading* global variable (boolean )
+default value = *true*
+
+switching the value of this variable between true and false to ask the parser to load or not load all objects inside each line during parsing.
+
+for example :
+{{{
+"#93".toIfcObject --> lines #61, #65, and #69 will be loaded automatically by default.
+}}}
+
+
+= Global  Methods =
+The method *toIfcObject* can be used to load any object through it's line_id inside the IFC file.
+This method extended the basic class "String", so you can easily write:
+
+Load one object
+{{{
+"#100".toIfcObject
+or
+"#100".to_obj 
+}}}
+
+
+load many objects at once
+{{{
+"#61#65#69#93#97#100".toIfcObject
+
+or
+
+$full_loading=true
+"#100".toIfcObject
+the objects with IDs: #61 #65 #69 #93 #97 will be loaded automatically
+}}}
+
+
+==List of all global variables==
+
+* Input Interface
+----
+
+$cgi
+
+$report_cols:string
+
+$filter:string
+
+$username
+
+$log: hash
+
+$res: hash
+
+$ifc_file_name 
+
+$ifc_files
+
+$output_format : to_html , to_xml , to_dae
+
+$auto_to_svg : true/false
+
+$auto_to_dae: true/false
+
+$dae_single_file: true/false
+
+$dae_geometry_file: true/false
+
+$dae_node_file
+
+$resultFile
+
+$ifcUnit["Length"]
+
+$ifcObjects : hash
+
+$points: hash
+
+$hash: hash
+
+$parent: hash
+
+$num_of_objects
+
+$full_loading: true/false
+
+$ifcClassesNames: hash
+
+$report_cols_by_class={}
+
+$errorFile
+
+$toBe_Deleted={}
+
+* Server settings:
+----
+
+$server
+
+$server_ip
+
+$ifc_path
+
+$server_url
+
+$ifc_file_dir_path
+
+$script_name
+
+$schemes
+
+$default_schema
+
+* User settings
+----
+
+$rules_validation: true/false
+
+$use_cache: true/false
+
+$cache_IfcPropertySet_as_HTML
+
+$max_limit_html: integer
+
+$ext_attribute ="area|area_side|volume|perimeter"
+
+$inline_propertyset: true/false
+
+$no_list_classes: string
+
+$safe_loading: true/false
+
+$after_upload ="objects_list" #other options :viewer  tree objects_list
+
+$debug: true/false
