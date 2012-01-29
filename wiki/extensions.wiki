@@ -41,9 +41,9 @@ Try it :
 
  * Get a list contains the area value of all doors and windows in the IFC model "AC10-Institute-Var-1.ifc":
 
-http://demo.ifcwebserver.org/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&report_cols=area&q=IFCDOOR|IFCWINDOW
+http://www.ifcwebserver.org/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&report_cols=area&q=IFCDOOR|IFCWINDOW
  * Create a report for all doors which have area > 3 m^2^ 
-http://demo.ifcwebserver.org/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&filter=o.area>3&report_cols=globalId|line_id|name|area&q=IFCDOOR
+http://www.ifcwebserver.org/ifc.rb?ifc_file=AC10-Institute-Var-1.ifc&filter=o.area>3&report_cols=globalId|line_id|name|area&q=IFCDOOR
 
 *Result:* 10 out of 77 doors
 
