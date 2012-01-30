@@ -84,3 +84,16 @@ http://www.ifcwebserver.org/ifc.rb?ifc_file=FZK-Haus-AC11-IFC.ifc&report_cols=to
 *Result:*
 
 http://ifcwebserver.googlecode.com/svn/doc/ifcwebServer_RGB_colors.png
+
+===Example 3 ===
+To get a list of all objects (globalId + name) and their associated properties.
+
+
+{{{
+http://www.ifcwebserver.org/ifc.rb?ifc_file=FZK-Haus-AC11-IFC.ifc
+&q=IFCRELDEFINESBYPROPERTIES
+&report_cols=relatedObjects.to_obj.globalId|relatedObjects.to_obj.name|relatingPropertyDefinition.to_obj.property_details
+}}}
+
+Note: _property_details_ is an extension function of the class IFCPROPERTYSET. It prints the property list as HTML table.
+
