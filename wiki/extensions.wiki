@@ -114,6 +114,10 @@ http://server_ip/ifc.rb?
 ifc_file=FZK-Haus-AC11-IFC.ifc
 &q=IFCRELDEFINESBYPROPERTIES
 &report_cols=relatedObjects.to_obj.class|relatedObjects.to_obj.globalId|relatedObjects.to_obj.name|relatingPropertyDefinition.to_obj.property_details
+
+Advanced Filter:
+$include_properties = ["att1","att2","att3" ... ]
+o.relatedObjects.to_s.to_obj.class == IFCWALL
 }}}
 
 
