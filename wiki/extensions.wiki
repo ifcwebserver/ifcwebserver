@@ -113,7 +113,8 @@ To get a list of all objects (class,globalId,name) and their associated properti
 http://server_ip/ifc.rb?ifc_file=xxxx.ifc&=IFCRELDEFINESBYPROPERTIES
 
 Report_cols:
-class:relatedObjects.to_obj.class|globalId:relatedObjects.to_obj.globalId|name:relatedObjects.to_obj.name|Attributes:relatingPropertyDefinition.to_obj.property_details
+class:relatedObjects.to_obj.class|globalId:relatedObjects.to_obj.globalId|name:relatedObjects.to_obj.name
+|Attributes:relatingPropertyDefinition.to_obj.property_details
 
 Advanced Filter:
 $include_properties = ["att1","att2","att3" ... ]
