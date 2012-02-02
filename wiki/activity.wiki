@@ -16,7 +16,7 @@
 
 {{{
     URL syntax:
-    http://server/ifcwebserver/ifc.rb?ifc_file=file1.ifc|file2.ifc|...|fileN.ifc&q=objects_list
+    http://server_ip/ifc.rb?ifc_file=file1.ifc|file2.ifc|...|fileN.ifc&q=objects_list
 }}}
 
  * Add wiki page : [http://code.google.com/p/ifcwebserver/wiki/extensions How to extend/modfiy IfcWebServer to meet your needs]
@@ -25,16 +25,16 @@
  * Add model tree views (hierarchical structure of the objects)
   ** Containment view
 {{{
-URL syntax: http://server/ifcwebserver/ifc.rb?ifc_file=xxx.ifc&q=model_tree
+URL syntax: http://server_ip/ifc.rb?ifc_file=xxx.ifc&q=model_tree
 }}}
   ** Containment view (IfcRelAggregates only) 
 {{{
-URL syntax: http://server/ifcwebserver/ifc.rb?ifc_file=xxx.ifc&q=model_tree_IfcRelAggregates
+URL syntax: http://server_ip/ifc.rb?ifc_file=xxx.ifc&q=model_tree_IfcRelAggregates
 }}}
   ** Containment view (IfcRelContainedInSpatialStructure only) 
 {{{
 URL syntax: 
-http://server/ifcwebserver/ifc.rb?ifc_file=xxx.ifc&q=model_tree_IfcRelContainedInSpatialStructure
+http://server_ip/ifc.rb?ifc_file=xxx.ifc&q=model_tree_IfcRelContainedInSpatialStructure
 }}}
 
  
