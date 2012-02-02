@@ -106,7 +106,7 @@ ifc_file=FZK-Haus-AC11-IFC.ifc
 http://ifcwebserver.googlecode.com/svn/doc/ifcwebServer_RGB_colors.png
 
 ===Example 3 ===
-To get a list of all objects (class,globalId,name) and their associated properties.
+To get a list of objects (class,globalId,name) and their associated properties (or subset of objects and a subset of their properties ).
 
 
 {{{
