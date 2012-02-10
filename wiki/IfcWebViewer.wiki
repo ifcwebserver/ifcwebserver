@@ -5,28 +5,22 @@
 IfcWebViewer is a part of ifcWebServer project, however it is still in a beta version.
 
 === Controls ===
-http://ifcwebserver.googlecode.com/svn/doc/IfcWebServer_WebGL_Viewer_howto.png
+http://i.imm.io/ggjB.png
 
-===Demo Examples===
-here are some online examples and screen shots using the IFC file :
-*AC10-Institute-Var-1.ifc* :
+Rotate: Left click + move
 
-*Result*
+Zoom: mouse wheel
 
+Pan: Middle button + move
 
-http://ifcwebserver.googlecode.com/svn/doc/WebViewerDemo1.png
-
-
-
-*Result:*
-
-http://ifcwebserver.googlecode.com/svn/doc/WebViewerDemo2.png
+Walkthrough keys:
+W,A, D, S,Q , E (+ Space key: 200% faster)
 
 
 ===How it work?===
 IfcWebServer converts the geometry representation of IFC objects into the  open and standard 3D format "COLLADA". The render takes place in the browser with help of the Spider WebGL Java script library (http://spidergl.org/).
 
-You need to have a WebGL enabled browser to be able to use IfcWebViewer  (Google Chrome/Firefox), MS Internet Explorer is NOT supported.
+You need a WebGL enabled browser to be able to use IfcWebViewer  (Google Chrome/Firefox), MS Internet Explorer is NOT supported.
 
 click here to check if your browser supports WebGL : http://get.webgl.org/
 
@@ -38,10 +32,12 @@ We are not trying to create a professional IFC Web-viewer .Viewing big models on
 
 IfcWebServer is a web-application, so adding the web browser makes sense as well.
 
-If you need only to view your IFC models using IfcWebViewer without the need to use special features you can convert and upload your model using free tools in easy steps :
+If you need only to view your IFC/3D models using IfcWebViewer without the need to use special features you can convert and upload your model using free tools in easy steps :
  # Open your IFC file with [ftp://ftp.dds.no/pub/install/IfcViewer/DDSViewer.exe DDS-Viewer ] and export it in 3ds format
  # import the 3ds file into [http://www.blender.org/download/get-blender/ Blender] and export it again in COLLADA format(dae extension)
  # Upload the dae file to the IfcWebServer server 
+ 
+Other supported formats are : .3ds (AutoDesk 3D Max) , .blend (Blender) , .skp (Google SketchUP)
 -----------
 ==Screenshots ==
 
