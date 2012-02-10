@@ -42,3 +42,11 @@ If you need only to view your IFC models using IfcWebViewer without the need to 
  # Open your IFC file with [ftp://ftp.dds.no/pub/install/IfcViewer/DDSViewer.exe DDS-Viewer ] and export it in 3ds format
  # import the 3ds file into [http://www.blender.org/download/get-blender/ Blender] and export it again in COLLADA format(dae extension)
  # Upload the dae file to the IfcWebServer server 
+-----------
+==Screenshots ==
+
+http://i.imm.io/gf6i.png
+
+http://i.imm.io/gf91.png
+
+http://i.imm.io/gfbs.png
