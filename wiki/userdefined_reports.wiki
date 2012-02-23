@@ -2,13 +2,13 @@
 
 = User-defined Reports =
 
-*Ifc WebServer* aims to smooth and simply the process of getting information from the IFC-based BIM models.
+*Ifc WebServer* aims to smooth and simplify the process of getting information from the IFC-based BIM models.
 
-User-defined reports are a way to allow the user to select which class fields (attribute) he likes to see as HTML reports inside the browser or as XML files to be used for further analysis.
+User-defined reports are a way to let the user select which fields (attribute) to be included.
 
-By default the reports will include all direct attributes of the IFC object instances.
+by default the reports will include all direct attributes of the IFC object instances.
 
-The syntax is rather simple:
+The syntax is very simple:
 {{{
 [ColumnHeader1:]attributeName1|[ColumnHeader2:]attributeName2|..|..|[ColumnHeaderN:]attributeNameN
 }}}
@@ -20,25 +20,3 @@ You can change the default name of column headers like this:
 {{{
 ID:line_id|GUID:globalId|name|representation|tag|objectType|predefinedType|description
 }}}
-a nice and advanced example of using user-defined reports is how to get a list of X,Y,Z coordinates in 3 separated columns.
-
-As may you know the IfcCartesianPoint saves these information through a single attribute "coordinates" like this :
-{{{
-#413=IFCCARTESIANPOINT ((288.,192.,6.));
-}}}
-
-to get the job done we can write :
-{{{
-ID:line_id|
-X:coordinates.sub("(","").sub(")","").split(",")[0].to_s|
-Y:coordinates.sub("(","").sub(")","").split(",")[1].to_s|
-Z:coordinates.sub("(","").sub(")","").split(",")[2].to_s|
-}}}
-
-if you already know about writing [http://code.google.com/p/ifcwebserver/wiki/filter_examples filter expression]  , you should not be surprised now to know that you can also use Ruby code inside the user-defined report expressions as well :)
-
-In this example we used the "sub" methods to delete ( ) and the "split" method to convert the x,y,z string to an array
-
-for most cases you do not need to know a lot about the IFC schema specification or Ruby, but the more you know, the more you get.
-
-more examples will be added later
