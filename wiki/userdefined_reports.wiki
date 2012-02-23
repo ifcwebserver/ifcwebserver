@@ -2,13 +2,9 @@
 
 = User-defined Reports =
 
-*Ifc WebServer* aims to smooth and simplify the process of getting information from the IFC-based BIM models.
+The user can select which fields (attribute) to be included in the query result by providing a user-defined report expression. By default all direct attributes of the IFC object instances will be included.
 
-User-defined reports are a way to let the user select which fields (attribute) to be included.
-
-by default the reports will include all direct attributes of the IFC object instances.
-
-The syntax is very simple:
+The syntax of user-defined reports expression is very simple:
 {{{
 [ColumnHeader1:]attributeName1|[ColumnHeader2:]attributeName2|..|..|[ColumnHeaderN:]attributeNameN
 }}}
