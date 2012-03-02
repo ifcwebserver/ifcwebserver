@@ -110,7 +110,7 @@ To get a list of objects (class,globalId,name) and their associated properties (
 
 
 {{{
-http://server_ip/ifc.rb?ifc_file=xxxx.ifc&=IFCRELDEFINESBYPROPERTIES
+http://server_ip/ifc.rb?ifc_file=xxxx.ifc&q=IFCRELDEFINESBYPROPERTIES
 
 
 Report_cols:
