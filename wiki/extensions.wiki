@@ -1,12 +1,11 @@
 #summary for developers: how to write extensions for IfcWebServer
 
-== What are extensions, and why we need them ? ==
-Extensions are classes methods. They extend the functionality of [http://code.google.com/p/ifcwebserver IfcWebServer] by adding a new value into the basic information inside the IFC files.
-We need them because only the basic information are saved inside the IFC file, but we  need to apply filters/queries on derived information.
+== What are extensions ? ==
+Extensions are classes methods. They extend the functionality of [http://code.google.com/p/ifcwebserver IfcWebServer] by adding a new value into the basic information in the IFC models.
 
-For example all sub classes of [http://buildingsmart-tech.org/ifc/IFC2x3/TC1/html/ifcprofileresource/lexical/ifcparameterizedprofiledef.htm IfcParameterizedProfileDef] contain  the basic information to describe the shape of the profile(like I T U L C Z Circle,Rectangle) but nothing more or less. 
+For example all sub classes of [http://buildingsmart-tech.org/ifc/IFC2x3/TC1/html/ifcprofileresource/lexical/ifcparameterizedprofiledef.htm IfcParameterizedProfileDef] contain  the basic information to describe the shape of the profile(like I T U L C Z Circle,Rectangle) but nothing more nothing less. 
 
-Wouldn't be nice if we have a method called "area" for all of these classes so we can make advanced quires like "give me all building elements which are defined through a parameterized profile and have a section area bigger than xxx m^2^", or create reports include the profile section area?
+Wouldn't be nice if we have a method called "area" for all of these profile classes? so we can make advanced quires like "give me all building elements which are defined through a parameterized profile and have a section area bigger than xxx m^2^", or to create reports include the profile section area.
 {{{
 http://server_ip/ifc.rb?
 ifc_file=AC10-Institute-Var-1.ifc
@@ -23,12 +22,11 @@ In short words "Extensions" are the added value of the basic information and a h
  
 
 == How to extend/modfiy IfcWebServer ==
-IfcWebServer is written in 100% Ruby code without the need to use any external libraries.
 
-As a final user may you wish to add new features or to modify something to meet your needs. The good news here that you don not have to be a professional programmer to be able to write your own extensions. The hard job is already done for you.
+As a final user may you wish to add new features or to modify something to meet your needs. You don not have to be a professional programmer to be able to write your own extensions. The hard job is already done for you.
 
 ===Example 1 ===
-As a first example, let us assume that you need to use the area value of windows and doors inside your queries/reports.According to the IFC specification the area is not saved inside the IFC files, but it can be calculated simply through the attributes "overallHeight" and "overallWidth", so here here are our simple extension methods
+As a first example, let us assume that you need to use the area value of windows and doors inside your queries/reports.According to the IFC specification the area is not saved inside the IFC files, but it can be calculated simply through the attributes "overallHeight" and "overallWidth", so we can write a simple extension methods "area" like this :
 {{{
 class IFCWINDOW 
   def area
@@ -67,7 +65,7 @@ ifc_file=AC10-Institute-Var-1.ifc
 *Result:* 10 out of 77 doors
 
 ===Example 2 ===
-The second example allow us to see the colors which are used inside the IFC model inside the internet browser.IFC spesification for the class [http://buildingsmart-tech.org/ifc/IFC2x3/TC1/html/ifcpresentationresource/lexical/ifccolourrgb.htm IfcColourRgb] defines colours as 3 numbers for Red,Green and Blue ratios:
+The second example allow us to list the colors which are used inside the IFC model. IFC spesification for the class [http://buildingsmart-tech.org/ifc/IFC2x3/TC1/html/ifcpresentationresource/lexical/ifccolourrgb.htm IfcColourRgb] defines colours as 3 numbers for Red,Green and Blue :
 
 {{{
 ENTITY IfcColourRgb
