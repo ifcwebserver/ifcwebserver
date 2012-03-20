@@ -2,7 +2,7 @@
 
 == Introduction ==
 
-IfcWebViewer is a part of ifcWebServer project, however it is still in a beta version.
+IFCWebViewer is a part of IFCWebServer project, however it is still in a beta version.
 
 === Controls ===
 http://i.imm.io/ggjB.png
