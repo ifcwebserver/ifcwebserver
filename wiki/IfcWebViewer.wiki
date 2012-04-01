@@ -38,6 +38,20 @@ If you need only to view your IFC/3D models using IfcWebViewer without the need 
  # Upload the dae file to the IfcWebServer server 
  
 Other supported formats are : .3ds (AutoDesk 3D Max) , .blend (Blender) , .skp (Google SketchUP)
+
+==Main features==
+
+* Layer managment
+* Walkthrough navigation
+* Creating simple sections(parallel to the camera)
+* Hiding/selecting 3D objects by name/globalId
+* Customization the color of building elements by type
+
+== Quick help==
+http://i.imm.io/kNWf.png
+
+== How to create a simple sections ==
+http://i.imm.io/kNVL.png
 -----------
 ==Screenshots ==
 
