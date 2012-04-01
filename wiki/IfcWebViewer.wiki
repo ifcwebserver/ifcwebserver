@@ -4,7 +4,7 @@
 
 IFC WebViewer is a part of IFCWebServer project. It enables viewing 3D models online indside the modern web broweser without installing any plugin.
 
-http://demo.ifcwebserver.org --> *IfcWebViewer*
+Demo server: http://demo.ifcwebserver.org ==>> *Ifc WebViewer*
 
 (You need a [http://get.webgl.org/ WebGL enabled browser] to be able to use IFC WebViewer (Google Chrome/Firefox), MS Internet Explorer is NOT supported)
 
