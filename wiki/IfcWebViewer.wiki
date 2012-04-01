@@ -2,10 +2,31 @@
 
 == Introduction ==
 
-IFCWebViewer is a part of IFCWebServer project, however it is still in a beta version.
+IFC WebViewer is a part of IFCWebServer project. It enables viewing 3D models online indside the modern web broweser without installing any plugin.
 
-=== Controls ===
-http://i.imm.io/ggjB.png
+You need a [http://get.webgl.org/ WebGL enabled browser] to be able to use IFC WebViewer (Google Chrome/Firefox), MS Internet Explorer is NOT supported.
+
+==Main features==
+  * Simple layer managment(hide, show, change the default color)
+  * Walkthrough navigation (mouse & keyboard keys)
+  * Creating simple sections(parallel to the camera)
+  * Hiding/selecting 3D objects by name/globalId  
+
+===How it work?===
+IfcWebServer converts the geometry representation of IFC objects into the  open and standard 3D format "COLLADA". The render takes place in the browser with help of the [http://spidergl.org/ SpiderGL] Java script library.
+
+==Upload your own models ==
+If you like to view/share your IFC/3D models online using IfcWebViewer  upload your BIM models to the demo server (IFC format) or convert them to one of the following 3d formats:
+  * AutoDesk 3ds: you can use [ftp://ftp.dds.no/pub/install/IfcViewer/DDSViewer.exe DDS-Viewer]
+  * Wavefront .obj: you can use [http://ifcopenshell.org/ IfcOpenShell]
+  * blender [http://ifcopenshell.org/ IfcOpenShell-plugin]
+  * dae (COLLADA format) (3ds,obj)---import----> Blender ---export---> COLLADA
+
+
+To keep your model private rename the files to start with "_"
+
+== Quick help==
+http://i.imm.io/kNWf.png
 
 Rotate: Left click + move
 
@@ -15,49 +36,19 @@ Pan: Middle button + move
 
 Walkthrough keys:
 W,A, D, S,Q , E (+ Space key: 200% faster)
-
-
-===How it work?===
-IfcWebServer converts the geometry representation of IFC objects into the  open and standard 3D format "COLLADA". The render takes place in the browser with help of the Spider WebGL Java script library (http://spidergl.org/).
-
-You need a WebGL enabled browser to be able to use IfcWebViewer  (Google Chrome/Firefox), MS Internet Explorer is NOT supported.
-
-click here to check if your browser supports WebGL : http://get.webgl.org/
-
-===Since there are enough free IFC viewers available why we need to reinvent the wheel ?===
-We are not trying to create a professional IFC Web-viewer .Viewing big models online will be always a bottle neck for the performance. We aims to create a simple viewer to support the idea behind IfcWebServer (getting information about the building model easily) with additional  features like:
- * Show the results of filters/queries directly in the browser for a partial model filters (select/hide operation)
- * Change the color of objects according to their properties for example for validation rules.
- * Exchange views between users as links.
-
-IfcWebServer is a web-application, so adding the web browser makes sense as well.
-
-If you need only to view your IFC/3D models using IfcWebViewer without the need to use special features you can convert and upload your model using free tools in easy steps :
- # Open your IFC file with [ftp://ftp.dds.no/pub/install/IfcViewer/DDSViewer.exe DDS-Viewer ] and export it in 3ds format
- # import the 3ds file into [http://www.blender.org/download/get-blender/ Blender] and export it again in COLLADA format(dae extension)
- # Upload the dae file to the IfcWebServer server 
- 
-Other supported formats are : .3ds (AutoDesk 3D Max) , .blend (Blender) , .skp (Google SketchUP)
-
-==Main features==
-
-* Layer managment
-* Walkthrough navigation
-* Creating simple sections(parallel to the camera)
-* Hiding/selecting 3D objects by name/globalId
-* Customization the color of building elements by type
-
-== Quick help==
-http://i.imm.io/kNWf.png
-
 == How to create a simple sections ==
 http://i.imm.io/kNVL.png
 -----------
 ==Screenshots ==
 
+http://i.imm.io/ggjB.png
 
 http://i.imm.io/gf91.png
 
 http://i.imm.io/gfbs.png
 
 http://i.imm.io/ggex.jpeg
+
+== TODO ==
+ * Change the color of objects according to their properties 
+ * Save and exchange views as url links.
