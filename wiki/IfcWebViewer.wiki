@@ -4,7 +4,9 @@
 
 IFC WebViewer is a part of IFCWebServer project. It enables viewing 3D models online indside the modern web broweser without installing any plugin.
 
-You need a [http://get.webgl.org/ WebGL enabled browser] to be able to use IFC WebViewer (Google Chrome/Firefox), MS Internet Explorer is NOT supported.
+http://demo.ifcwebserver.org --> *IfcWebViewer*
+
+(You need a [http://get.webgl.org/ WebGL enabled browser] to be able to use IFC WebViewer (Google Chrome/Firefox), MS Internet Explorer is NOT supported)
 
 ==Main features==
   * Simple layer managment(hide, show, change the default color)
@@ -12,7 +14,7 @@ You need a [http://get.webgl.org/ WebGL enabled browser] to be able to use IFC W
   * Creating simple sections(parallel to the camera)
   * Hiding/selecting 3D objects by name/globalId  
 
-===How it work?===
+==How it works?==
 IfcWebServer converts the geometry representation of IFC objects into the  open and standard 3D format "COLLADA". The render takes place in the browser with help of the [http://spidergl.org/ SpiderGL] Java script library.
 
 ==Upload your own models ==
@@ -36,7 +38,9 @@ Pan: Middle button + move
 
 Walkthrough keys:
 W,A, D, S,Q , E (+ Space key: 200% faster)
-== How to create a simple sections ==
+R reset the camera location
+
+== How to create a simple section ==
 http://i.imm.io/kNVL.png
 -----------
 ==Screenshots ==
