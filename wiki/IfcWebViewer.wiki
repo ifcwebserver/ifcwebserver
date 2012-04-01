@@ -25,7 +25,7 @@ If you like to view/share your IFC/3D models online using IfcWebViewer  upload y
   * dae (COLLADA format) (3ds,obj)---import----> Blender ---export---> COLLADA
 
 
-To keep your model private rename the files to start with "_"
+_To keep your model private rename the files to start with `_`_
 
 == Quick help==
 http://i.imm.io/kNWf.png
@@ -46,8 +46,6 @@ http://i.imm.io/kNVL.png
 ==Screenshots ==
 
 http://i.imm.io/ggjB.png
-
-http://i.imm.io/gf91.png
 
 http://i.imm.io/gfbs.png
 
