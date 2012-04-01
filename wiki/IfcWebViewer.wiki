@@ -8,6 +8,8 @@ Demo server: http://demo.ifcwebserver.org ==>> *Ifc WebViewer*
 
 (You need a [http://get.webgl.org/ WebGL enabled browser] to be able to use IFC WebViewer (Google Chrome/Firefox), MS Internet Explorer is NOT supported)
 
+[http://www.windows7hacker.com/index.php/2010/02/how-to-enable-webgl-in-firefox-chrome-and-safari/ How to Enable WebGL in FireFox, Chrome and Safari]
+
 ==Main features==
   * Simple layer managment(hide, show, change the default color)
   * Walkthrough navigation (mouse & keyboard keys)
