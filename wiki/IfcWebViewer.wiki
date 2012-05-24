@@ -2,7 +2,7 @@
 
 == Introduction ==
 
-IFC WebViewer is a part of IFCWebServer project. It enables viewing 3D models online inside the modern web browser without installing any plugin.
+IFC WebViewer is a part of IFCWebServer project. It enables viewing 3D models online inside a modern web browser without installing any plugin.
 
 Demo server: http://demo.ifcwebserver.org ==>> *Ifc WebViewer*
 
