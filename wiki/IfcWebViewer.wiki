@@ -2,7 +2,7 @@
 
 == Introduction ==
 
-IFC WebViewer is a part of IFCWebServer project. It enables viewing 3D models online indside the modern web broweser without installing any plugin.
+IFC WebViewer is a part of IFCWebServer project. It enables viewing 3D models online inside the modern web browser without installing any plugin.
 
 Demo server: http://demo.ifcwebserver.org ==>> *Ifc WebViewer*
 
@@ -11,7 +11,7 @@ Demo server: http://demo.ifcwebserver.org ==>> *Ifc WebViewer*
 [http://www.windows7hacker.com/index.php/2010/02/how-to-enable-webgl-in-firefox-chrome-and-safari/ How to Enable WebGL in FireFox, Chrome and Safari]
 
 ==Main features==
-  * Simple layer managment(hide, show, change the default color)
+  * Simple layer management (hide, show, change the default color)
   * Walkthrough navigation (mouse & keyboard keys)
   * Creating simple sections(parallel to the camera)
   * Hiding/selecting 3D objects by name/globalId  
