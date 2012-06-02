@@ -19,7 +19,7 @@ http://www.ifcwebserver.org/sgl
 ==How it works?==
 IfcWebServer converts the geometry representation of IFC objects into the  open and standard 3D format "COLLADA". The render takes place in the browser with help of the [http://spidergl.org/ SpiderGL] Java script library.
 
-==Upload your own models ==
+==Upload your own 3D models ==
 If you like to view/share your IFC/3D models online using IfcWebViewer  upload your BIM models to the demo server (IFC format) or convert them to one of the following 3d formats:
   * AutoDesk 3ds: you can use [ftp://ftp.dds.no/pub/install/IfcViewer/DDSViewer.exe DDS-Viewer]
   * Wavefront .obj: you can use [http://ifcopenshell.org/ IfcOpenShell]
