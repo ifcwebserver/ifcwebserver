@@ -7,7 +7,7 @@ For example all sub classes of [http://buildingsmart-tech.org/ifc/IFC2x3/TC1/htm
 
 Wouldn't be nice if we have a method called "area" for all of these profile classes? so we can make advanced quires like "give me all building elements which are defined through a parameterized profile and have a section area bigger than xxx m^2^", or to create reports include the profile section area.
 {{{
-http://server_ip/ifc.rb?
+http://www.ifcwebserver.org/ifc.rb?
 ifc_file=AC10-Institute-Var-1.ifc
 &filter=o.area>10
 &report_cols=area
@@ -46,16 +46,16 @@ Try it :
 
  * Get a list contains the area value of all doors and windows in the IFC model "AC10-Institute-Var-1.ifc":
 {{{
-http://server_ip/ifc.rb?
+http://www.ifcwebserver.org/ifc.rb?
 ifc_file=AC10-Institute-Var-1.ifc
 &report_cols=area
 &q=IFCDOOR|IFCWINDOW
 }}}
-     *(you have to replace the http://server_ip with the current IP address of the the demo server at : http://demo.ifcwebserver.org)
+     
 
  * Create a report for all doors which have area > 3 m^2^ 
 {{{
-http://server_ip/ifc.rb?
+http://www.ifcwebserver.org/ifc.rb?
 ifc_file=AC10-Institute-Var-1.ifc
 &filter=o.area>3
 &report_cols=globalId|line_id|name|area
@@ -93,7 +93,7 @@ now the two new methods *to_html_div* and *to_RGB_HEX* are available and ready t
 
 Try it:
 {{{
-http://server_ip/ifc.rb?
+http://www.ifcwebserver.org/ifc.rb?
 ifc_file=FZK-Haus-AC11-IFC.ifc
 &report_cols=to_html_div|to_RGB_HEX
 &q=IFCCOLOURRGB
@@ -108,7 +108,7 @@ To get a list of objects (class,globalId,name) and their associated properties (
 
 
 {{{
-http://server_ip/ifc.rb?ifc_file=xxxx.ifc&q=IFCRELDEFINESBYPROPERTIES
+http://www.ifcwebserver.org/ifc.rb?ifc_file=xxxx.ifc&q=IFCRELDEFINESBYPROPERTIES
 
 
 Report_cols:
