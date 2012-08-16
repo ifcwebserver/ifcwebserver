@@ -79,7 +79,7 @@ size
 
 ===Note===
 ----
- * Attributes names should start with a small letter.
+ * Attributes names are *case sensitive* and they should start with a small letter .
 
  * IFC classes should be written in capital letters without ""
 
