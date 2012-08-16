@@ -32,6 +32,8 @@ Here we used a Ruby method inside the filter !
 o.globalId == "'2WnDGvXIP14xQJyJ3RQPXx'"
 }}}
 
+Note: Attributes names are *case sensitiv* 
+
 what about if we like to get a list of all IfcBuildingElement objects which have a non empty "description" attribute ?
 of course we can do the same like above and write such a boring filter expression :
 {{{
