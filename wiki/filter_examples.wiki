@@ -12,7 +12,7 @@ here are a list of simple filters which you can try them on the IFC model: *AC10
 ----
   * get all slabs
 {{{
-o.class = IFCSLAB
+o.class == IFCSLAB
 }}}
 
 The letter *"o"* refers inside the filter expression to a dummy object and should be written followed be a point before the attributes names
