@@ -116,9 +116,11 @@ class:relatedObjects.to_obj.class|globalId:relatedObjects.to_obj.globalId|name:r
 |Attributes:relatingPropertyDefinition.to_obj.property_details
 
 Advanced Filter:
-$include_properties = ["att1","att2","att3" ... ]
-o.relatedObjects.to_s.to_obj.class == IFCWALL
+o.relatedObjects.to_s.to_obj.class.superclass == IFCBUILDINGELEMENT
 }}}
 
+http://www.ifcwebserver.org/doc/extensions_advanced_example.png
+
+http://www.ifcwebserver.org/doc/extensions_advanced_example_res.png
 
 Note: _property_details_ is an extension function of the class IfcPropertySet. It prints the property list as HTML table.
