@@ -49,7 +49,3 @@ http://i.imm.io/ggjB.png
 http://i.imm.io/gfbs.png
 
 http://i.imm.io/ggex.jpeg
-
-== TODO ==
- * Change the color of objects according to their properties 
- * Save and exchange views as url links.
