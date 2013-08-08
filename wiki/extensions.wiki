@@ -1,7 +1,12 @@
 #summary for developers: how to write extensions for IfcWebServer
 
 == What are extensions ? ==
-Extensions are classes methods. They extend the functionality of [http://code.google.com/p/ifcwebserver IfcWebServer] by adding a new value into the basic information in the IFC models.
+Extensions are classes methods. They extend the functionality of IFC classes and the [http://code.google.com/p/ifcwebserver IfcWebServer] core functions by adding a new functions on-the-fly on the level of the  server or on the level of each user.
+
+*Server Extension repository:*
+
+https://github.com/ifcwebserver/IFCWebServer-Extensions
+
 
 For example all sub classes of [http://buildingsmart-tech.org/ifc/IFC2x3/TC1/html/ifcprofileresource/lexical/ifcparameterizedprofiledef.htm IfcParameterizedProfileDef] contain  the basic information to describe the shape of the profile(like I T U L C Z Circle,Rectangle) but nothing more nothing less. 
 
