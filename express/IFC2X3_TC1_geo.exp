@@ -1,0 +1,1579 @@
+SCHEMA IFC2X3;
+
+ENTITY Ifc2DCompositeCurve
+ SUBTYPE OF (IfcCompositeCurve);
+ WHERE
+	WR1 : SELF\IfcCompositeCurve.ClosedCurve;
+	WR2 : SELF\IfcCurve.Dim = 2;
+END_ENTITY;
+
+
+
+
+ENTITY IfcArbitraryClosedProfileDef
+ SUPERTYPE OF (ONEOF
+	(IfcArbitraryProfileDefWithVoids))
+ SUBTYPE OF (IfcProfileDef);
+	OuterCurve : IfcCurve;
+ WHERE
+	WR1 : OuterCurve.Dim = 2;
+	WR2 : NOT('IFC2X3.IFCLINE' IN TYPEOF(OuterCurve));
+	WR3 : NOT('IFC2X3.IFCOFFSETCURVE2D' IN TYPEOF(OuterCurve));
+END_ENTITY;
+
+ENTITY IfcArbitraryOpenProfileDef
+ SUPERTYPE OF (ONEOF
+	(IfcCenterLineProfileDef))
+ SUBTYPE OF (IfcProfileDef);
+	Curve : IfcBoundedCurve;
+ WHERE
+	WR11 : ('IFC2X3.IFCCENTERLINEPROFILEDEF' IN TYPEOF(SELF)) OR 
+              (SELF\IfcProfileDef.ProfileType = IfcProfileTypeEnum.CURVE);
+	WR12 : Curve.Dim = 2;
+END_ENTITY;
+
+ENTITY IfcArbitraryProfileDefWithVoids
+ SUBTYPE OF (IfcArbitraryClosedProfileDef);
+	InnerCurves : SET [1:?] OF IfcCurve;
+ WHERE
+	WR1 : SELF\IfcProfileDef.ProfileType = AREA;
+	WR2 : SIZEOF(QUERY(temp <* InnerCurves | temp.Dim <> 2)) = 0;
+	WR3 : SIZEOF(QUERY(temp <* InnerCurves | 'IFC2X3.IFCLINE' IN TYPEOF(temp))) = 0;
+END_ENTITY;
+
+
+ENTITY IfcAsymmetricIShapeProfileDef
+ SUBTYPE OF (IfcIShapeProfileDef);
+	TopFlangeWidth : IfcPositiveLengthMeasure;
+	TopFlangeThickness : OPTIONAL IfcPositiveLengthMeasure;
+	TopFlangeFilletRadius : OPTIONAL IfcPositiveLengthMeasure;
+	CentreOfGravityInY : OPTIONAL IfcPositiveLengthMeasure;
+END_ENTITY;
+
+ENTITY IfcAxis1Placement
+ SUBTYPE OF (IfcPlacement);
+	Axis : OPTIONAL IfcDirection;
+ DERIVE
+	Z : IfcDirection := NVL (IfcNormalise(Axis), IfcRepresentationItem() || IfcGeometricRepresentationItem () || IfcDirection([0.0,0.0,1.0]));
+ WHERE
+	WR1 : (NOT (EXISTS (Axis))) OR (Axis.Dim = 3);
+	WR2 : SELF\IfcPlacement.Location.Dim = 3;
+END_ENTITY;
+
+ENTITY IfcAxis2Placement2D
+ SUBTYPE OF (IfcPlacement);
+	RefDirection : OPTIONAL IfcDirection;
+ DERIVE
+	P : LIST [2:2] OF IfcDirection := IfcBuild2Axes(RefDirection);
+ WHERE
+	WR1 : (NOT (EXISTS (RefDirection))) OR (RefDirection.Dim = 2);
+	WR2 : SELF\IfcPlacement.Location.Dim = 2;
+END_ENTITY;
+
+ENTITY IfcAxis2Placement3D
+ SUBTYPE OF (IfcPlacement);
+	Axis : OPTIONAL IfcDirection;
+	RefDirection : OPTIONAL IfcDirection;
+ DERIVE
+	P : LIST [3:3] OF IfcDirection := IfcBuildAxes(Axis, RefDirection);
+ WHERE
+	WR1 : SELF\IfcPlacement.Location.Dim = 3;
+	WR2 : (NOT (EXISTS (Axis))) OR (Axis.Dim = 3);
+	WR3 : (NOT (EXISTS (RefDirection))) OR (RefDirection.Dim = 3);
+	WR4 : (NOT (EXISTS (Axis))) OR (NOT (EXISTS (RefDirection))) OR (IfcCrossProduct(Axis,RefDirection).Magnitude > 0.0);
+	WR5 : NOT ((EXISTS (Axis)) XOR (EXISTS (RefDirection)));
+END_ENTITY;
+
+ENTITY IfcBSplineCurve
+ ABSTRACT SUPERTYPE OF (ONEOF
+	(IfcBezierCurve))
+ SUBTYPE OF (IfcBoundedCurve);
+	Degree : INTEGER;
+	ControlPointsList : LIST [2:?] OF IfcCartesianPoint;
+	CurveForm : IfcBSplineCurveForm;
+	ClosedCurve : LOGICAL;
+	SelfIntersect : LOGICAL;
+ DERIVE
+	ControlPoints : ARRAY [0:255] OF IfcCartesianPoint := IfcListToArray(ControlPointsList,0,UpperIndexOnControlPoints);
+	UpperIndexOnControlPoints : INTEGER := (SIZEOF(ControlPointsList) - 1);
+ WHERE
+	WR41 : SIZEOF(QUERY(Temp <* ControlPointsList |
+               Temp.Dim <> ControlPointsList[1].Dim))
+             = 0;
+END_ENTITY;
+
+
+
+ENTITY IfcBezierCurve
+ SUPERTYPE OF (ONEOF
+	(IfcRationalBezierCurve))
+ SUBTYPE OF (IfcBSplineCurve);
+END_ENTITY;
+
+
+
+ENTITY IfcBooleanClippingResult
+ SUBTYPE OF (IfcBooleanResult);
+ WHERE
+	WR1 : ('IFC2X3.IFCSWEPTAREASOLID' IN TYPEOF(FirstOperand)) OR ('IFC2X3.IFCBOOLEANCLIPPINGRESULT' IN TYPEOF(FirstOperand));
+	WR2 : ('IFC2X3.IFCHALFSPACESOLID' IN TYPEOF(SecondOperand));
+	WR3 : Operator = DIFFERENCE;
+END_ENTITY;
+
+ENTITY IfcBooleanResult
+ SUPERTYPE OF (ONEOF
+	(IfcBooleanClippingResult))
+ SUBTYPE OF (IfcGeometricRepresentationItem);
+	Operator : IfcBooleanOperator;
+	FirstOperand : IfcBooleanOperand;
+	SecondOperand : IfcBooleanOperand;
+ DERIVE
+	Dim : IfcDimensionCount := FirstOperand.Dim;
+ WHERE
+	WR1 : FirstOperand.Dim = SecondOperand.Dim;
+END_ENTITY;
+
+ENTITY IfcBoundaryCondition
+ ABSTRACT SUPERTYPE OF (ONEOF
+	(IfcBoundaryEdgeCondition
+	,IfcBoundaryFaceCondition
+	,IfcBoundaryNodeCondition));
+	Name : OPTIONAL IfcLabel;
+END_ENTITY;
+
+ENTITY IfcBoundaryEdgeCondition
+ SUBTYPE OF (IfcBoundaryCondition);
+	LinearStiffnessByLengthX : OPTIONAL IfcModulusOfLinearSubgradeReactionMeasure;
+	LinearStiffnessByLengthY : OPTIONAL IfcModulusOfLinearSubgradeReactionMeasure;
+	LinearStiffnessByLengthZ : OPTIONAL IfcModulusOfLinearSubgradeReactionMeasure;
+	RotationalStiffnessByLengthX : OPTIONAL IfcModulusOfRotationalSubgradeReactionMeasure;
+	RotationalStiffnessByLengthY : OPTIONAL IfcModulusOfRotationalSubgradeReactionMeasure;
+	RotationalStiffnessByLengthZ : OPTIONAL IfcModulusOfRotationalSubgradeReactionMeasure;
+END_ENTITY;
+
+ENTITY IfcBoundaryFaceCondition
+ SUBTYPE OF (IfcBoundaryCondition);
+	LinearStiffnessByAreaX : OPTIONAL IfcModulusOfSubgradeReactionMeasure;
+	LinearStiffnessByAreaY : OPTIONAL IfcModulusOfSubgradeReactionMeasure;
+	LinearStiffnessByAreaZ : OPTIONAL IfcModulusOfSubgradeReactionMeasure;
+END_ENTITY;
+
+ENTITY IfcBoundaryNodeCondition
+ SUPERTYPE OF (ONEOF
+	(IfcBoundaryNodeConditionWarping))
+ SUBTYPE OF (IfcBoundaryCondition);
+	LinearStiffnessX : OPTIONAL IfcLinearStiffnessMeasure;
+	LinearStiffnessY : OPTIONAL IfcLinearStiffnessMeasure;
+	LinearStiffnessZ : OPTIONAL IfcLinearStiffnessMeasure;
+	RotationalStiffnessX : OPTIONAL IfcRotationalStiffnessMeasure;
+	RotationalStiffnessY : OPTIONAL IfcRotationalStiffnessMeasure;
+	RotationalStiffnessZ : OPTIONAL IfcRotationalStiffnessMeasure;
+END_ENTITY;
+
+ENTITY IfcBoundaryNodeConditionWarping
+ SUBTYPE OF (IfcBoundaryNodeCondition);
+	WarpingStiffness : OPTIONAL IfcWarpingMomentMeasure;
+END_ENTITY;
+
+ENTITY IfcBoundedCurve
+ ABSTRACT SUPERTYPE OF (ONEOF
+	(IfcBSplineCurve
+	,IfcCompositeCurve
+	,IfcPolyline
+	,IfcTrimmedCurve))
+ SUBTYPE OF (IfcCurve);
+END_ENTITY;
+
+ENTITY IfcBoundedSurface
+ SUPERTYPE OF (ONEOF
+	(IfcCurveBoundedPlane
+	,IfcRectangularTrimmedSurface))
+ SUBTYPE OF (IfcSurface);
+END_ENTITY;
+
+ENTITY IfcBoundingBox
+ SUBTYPE OF (IfcGeometricRepresentationItem);
+	Corner : IfcCartesianPoint;
+	XDim : IfcPositiveLengthMeasure;
+	YDim : IfcPositiveLengthMeasure;
+	ZDim : IfcPositiveLengthMeasure;
+ DERIVE
+	Dim : IfcDimensionCount := 3;
+END_ENTITY;
+
+ENTITY IfcBoxedHalfSpace
+ SUBTYPE OF (IfcHalfSpaceSolid);
+	Enclosure : IfcBoundingBox;
+ WHERE
+	WR1 : NOT ('IFC2X3.IFCCURVEBOUNDEDPLANE' IN TYPEOF(SELF\IfcHalfSpaceSolid.BaseSurface));
+END_ENTITY;
+
+
+
+ENTITY IfcCShapeProfileDef
+ SUBTYPE OF (IfcParameterizedProfileDef);
+	Depth : IfcPositiveLengthMeasure;
+	Width : IfcPositiveLengthMeasure;
+	WallThickness : IfcPositiveLengthMeasure;
+	Girth : IfcPositiveLengthMeasure;
+	InternalFilletRadius : OPTIONAL IfcPositiveLengthMeasure;
+	CentreOfGravityInX : OPTIONAL IfcPositiveLengthMeasure;
+ WHERE
+	WR1 : Girth < (Depth / 2.);
+	WR2 : NOT(EXISTS(InternalFilletRadius)) OR
+            ((InternalFilletRadius <= Width/2.) AND (InternalFilletRadius <= Depth/2.));
+	WR3 : (WallThickness < Width/2.) AND (WallThickness < Depth/2.);
+END_ENTITY;
+
+
+
+
+ENTITY IfcCartesianPoint
+ SUBTYPE OF (IfcPoint);
+	Coordinates : LIST [1:3] OF IfcLengthMeasure;
+ DERIVE
+	Dim : IfcDimensionCount := HIINDEX(Coordinates);
+ WHERE
+	WR1 : HIINDEX(Coordinates) >= 2;
+END_ENTITY;
+
+ENTITY IfcCartesianTransformationOperator
+ ABSTRACT SUPERTYPE OF (ONEOF
+	(IfcCartesianTransformationOperator2D
+	,IfcCartesianTransformationOperator3D))
+ SUBTYPE OF (IfcGeometricRepresentationItem);
+	Axis1 : OPTIONAL IfcDirection;
+	Axis2 : OPTIONAL IfcDirection;
+	LocalOrigin : IfcCartesianPoint;
+	Scale : OPTIONAL REAL;
+ DERIVE
+	Scl : REAL := NVL(Scale, 1.0);
+	Dim : IfcDimensionCount := LocalOrigin.Dim;
+ WHERE
+	WR1 : Scl > 0.0;
+END_ENTITY;
+
+ENTITY IfcCartesianTransformationOperator2D
+ SUPERTYPE OF (ONEOF
+	(IfcCartesianTransformationOperator2DnonUniform))
+ SUBTYPE OF (IfcCartesianTransformationOperator);
+ DERIVE
+	U : LIST [2:2] OF IfcDirection := IfcBaseAxis(2,SELF\IfcCartesianTransformationOperator.Axis1,
+          SELF\IfcCartesianTransformationOperator.Axis2,?);
+ WHERE
+	WR1 : SELF\IfcCartesianTransformationOperator.Dim = 2;
+	WR2 : NOT(EXISTS(SELF\IfcCartesianTransformationOperator.Axis1)) OR 
+            (SELF\IfcCartesianTransformationOperator.Axis1.Dim = 2);
+	WR3 : NOT(EXISTS(SELF\IfcCartesianTransformationOperator.Axis2)) OR 
+            (SELF\IfcCartesianTransformationOperator.Axis2.Dim = 2);
+END_ENTITY;
+
+ENTITY IfcCartesianTransformationOperator2DnonUniform
+ SUBTYPE OF (IfcCartesianTransformationOperator2D);
+	Scale2 : OPTIONAL REAL;
+ DERIVE
+	Scl2 : REAL := NVL(Scale2, SELF\IfcCartesianTransformationOperator.Scl);
+ WHERE
+	WR1 : Scl2 > 0.0;
+END_ENTITY;
+
+ENTITY IfcCartesianTransformationOperator3D
+ SUPERTYPE OF (ONEOF
+	(IfcCartesianTransformationOperator3DnonUniform))
+ SUBTYPE OF (IfcCartesianTransformationOperator);
+	Axis3 : OPTIONAL IfcDirection;
+ DERIVE
+	U : LIST [3:3] OF IfcDirection := IfcBaseAxis(3,SELF\IfcCartesianTransformationOperator.Axis1,
+              SELF\IfcCartesianTransformationOperator.Axis2,Axis3);
+ WHERE
+	WR1 : SELF\IfcCartesianTransformationOperator.Dim = 3;
+	WR2 : NOT(EXISTS(SELF\IfcCartesianTransformationOperator.Axis1)) OR 
+            (SELF\IfcCartesianTransformationOperator.Axis1.Dim = 3);
+	WR3 : NOT(EXISTS(SELF\IfcCartesianTransformationOperator.Axis2)) OR 
+            (SELF\IfcCartesianTransformationOperator.Axis2.Dim = 3);
+	WR4 : NOT(EXISTS(Axis3)) OR (Axis3.Dim = 3);
+END_ENTITY;
+
+ENTITY IfcCartesianTransformationOperator3DnonUniform
+ SUBTYPE OF (IfcCartesianTransformationOperator3D);
+	Scale2 : OPTIONAL REAL;
+	Scale3 : OPTIONAL REAL;
+ DERIVE
+	Scl2 : REAL := NVL(Scale2, SELF\IfcCartesianTransformationOperator.Scl);
+	Scl3 : REAL := NVL(Scale3, SELF\IfcCartesianTransformationOperator.Scl);
+ WHERE
+	WR1 : Scl2 > 0.0;
+	WR2 : Scl3 > 0.0;
+END_ENTITY;
+
+ENTITY IfcCenterLineProfileDef
+ SUBTYPE OF (IfcArbitraryOpenProfileDef);
+	Thickness : IfcPositiveLengthMeasure;
+END_ENTITY;
+
+ENTITY IfcChamferEdgeFeature
+ SUBTYPE OF (IfcEdgeFeature);
+	Width : OPTIONAL IfcPositiveLengthMeasure;
+	Height : OPTIONAL IfcPositiveLengthMeasure;
+END_ENTITY;
+
+
+
+ENTITY IfcCircle
+ SUBTYPE OF (IfcConic);
+	Radius : IfcPositiveLengthMeasure;
+END_ENTITY;
+
+ENTITY IfcCircleHollowProfileDef
+ SUBTYPE OF (IfcCircleProfileDef);
+	WallThickness : IfcPositiveLengthMeasure;
+ WHERE
+	WR1 : WallThickness < SELF\IfcCircleProfileDef.Radius;
+END_ENTITY;
+
+ENTITY IfcCircleProfileDef
+ SUPERTYPE OF (ONEOF
+	(IfcCircleHollowProfileDef))
+ SUBTYPE OF (IfcParameterizedProfileDef);
+	Radius : IfcPositiveLengthMeasure;
+END_ENTITY;
+
+
+
+ENTITY IfcClosedShell
+ SUBTYPE OF (IfcConnectedFaceSet);
+END_ENTITY;
+
+
+
+ENTITY IfcColourRgb
+ SUBTYPE OF (IfcColourSpecification);
+	Red : IfcNormalisedRatioMeasure;
+	Green : IfcNormalisedRatioMeasure;
+	Blue : IfcNormalisedRatioMeasure;
+END_ENTITY;
+
+ENTITY IfcColourSpecification
+ ABSTRACT SUPERTYPE OF (ONEOF
+	(IfcColourRgb));
+	Name : OPTIONAL IfcLabel;
+END_ENTITY;
+
+ENTITY IfcCompositeCurve
+ SUPERTYPE OF (ONEOF
+	(Ifc2DCompositeCurve))
+ SUBTYPE OF (IfcBoundedCurve);
+	Segments : LIST [1:?] OF IfcCompositeCurveSegment;
+	SelfIntersect : LOGICAL;
+ DERIVE
+	NSegments : INTEGER := SIZEOF(Segments);
+	ClosedCurve : LOGICAL := Segments[NSegments].Transition <> Discontinuous;
+ WHERE
+	WR41 : ((NOT ClosedCurve) AND (SIZEOF(QUERY(Temp <* Segments | Temp.Transition = Discontinuous)) = 1)) OR ((ClosedCurve) AND (SIZEOF(QUERY(Temp <* Segments | Temp.Transition = Discontinuous)) = 0));
+	WR42 : SIZEOF( QUERY( Temp <* Segments | Temp.Dim <> Segments[1].Dim)) = 0;
+END_ENTITY;
+
+ENTITY IfcCompositeCurveSegment
+ SUBTYPE OF (IfcGeometricRepresentationItem);
+	Transition : IfcTransitionCode;
+	SameSense : BOOLEAN;
+	ParentCurve : IfcCurve;
+ DERIVE
+	Dim : IfcDimensionCount := ParentCurve.Dim;
+ INVERSE
+	UsingCurves : SET [1:?] OF IfcCompositeCurve FOR Segments;
+ WHERE
+	WR1 : ('IFC2X3.IFCBOUNDEDCURVE' IN TYPEOF(ParentCurve));
+END_ENTITY;
+
+ENTITY IfcCompositeProfileDef
+ SUBTYPE OF (IfcProfileDef);
+	Profiles : SET [2:?] OF IfcProfileDef;
+	Label : OPTIONAL IfcLabel;
+ WHERE
+	WR1 : SIZEOF(QUERY(temp <* Profiles | temp.ProfileType <> Profiles[1].ProfileType)) = 0;
+	WR2 : SIZEOF(QUERY(temp <* Profiles | 'IFC2X3.IFCCOMPOSITEPROFILEDEF' IN TYPEOF(temp))) = 0;
+END_ENTITY;
+
+
+
+
+ENTITY IfcConic
+ ABSTRACT SUPERTYPE OF (ONEOF
+	(IfcCircle
+	,IfcEllipse))
+ SUBTYPE OF (IfcCurve);
+	Position : IfcAxis2Placement;
+END_ENTITY;
+
+ENTITY IfcConnectedFaceSet
+ SUPERTYPE OF (ONEOF
+	(IfcClosedShell
+	,IfcOpenShell))
+ SUBTYPE OF (IfcTopologicalRepresentationItem);
+	CfsFaces : SET [1:?] OF IfcFace;
+END_ENTITY;
+
+ENTITY IfcConnectionCurveGeometry
+ SUBTYPE OF (IfcConnectionGeometry);
+	CurveOnRelatingElement : IfcCurveOrEdgeCurve;
+	CurveOnRelatedElement : OPTIONAL IfcCurveOrEdgeCurve;
+END_ENTITY;
+
+ENTITY IfcConnectionGeometry
+ ABSTRACT SUPERTYPE OF (ONEOF
+	(IfcConnectionCurveGeometry
+	,IfcConnectionPointGeometry
+	,IfcConnectionPortGeometry
+	,IfcConnectionSurfaceGeometry));
+END_ENTITY;
+
+ENTITY IfcConnectionPointEccentricity
+ SUBTYPE OF (IfcConnectionPointGeometry);
+	EccentricityInX : OPTIONAL IfcLengthMeasure;
+	EccentricityInY : OPTIONAL IfcLengthMeasure;
+	EccentricityInZ : OPTIONAL IfcLengthMeasure;
+END_ENTITY;
+
+ENTITY IfcConnectionPointGeometry
+ SUPERTYPE OF (ONEOF
+	(IfcConnectionPointEccentricity))
+ SUBTYPE OF (IfcConnectionGeometry);
+	PointOnRelatingElement : IfcPointOrVertexPoint;
+	PointOnRelatedElement : OPTIONAL IfcPointOrVertexPoint;
+END_ENTITY;
+
+
+ENTITY IfcCraneRailAShapeProfileDef
+ SUBTYPE OF (IfcParameterizedProfileDef);
+	OverallHeight : IfcPositiveLengthMeasure;
+	BaseWidth2 : IfcPositiveLengthMeasure;
+	Radius : OPTIONAL IfcPositiveLengthMeasure;
+	HeadWidth : IfcPositiveLengthMeasure;
+	HeadDepth2 : IfcPositiveLengthMeasure;
+	HeadDepth3 : IfcPositiveLengthMeasure;
+	WebThickness : IfcPositiveLengthMeasure;
+	BaseWidth4 : IfcPositiveLengthMeasure;
+	BaseDepth1 : IfcPositiveLengthMeasure;
+	BaseDepth2 : IfcPositiveLengthMeasure;
+	BaseDepth3 : IfcPositiveLengthMeasure;
+	CentreOfGravityInY : OPTIONAL IfcPositiveLengthMeasure;
+END_ENTITY;
+
+ENTITY IfcCraneRailFShapeProfileDef
+ SUBTYPE OF (IfcParameterizedProfileDef);
+	OverallHeight : IfcPositiveLengthMeasure;
+	HeadWidth : IfcPositiveLengthMeasure;
+	Radius : OPTIONAL IfcPositiveLengthMeasure;
+	HeadDepth2 : IfcPositiveLengthMeasure;
+	HeadDepth3 : IfcPositiveLengthMeasure;
+	WebThickness : IfcPositiveLengthMeasure;
+	BaseDepth1 : IfcPositiveLengthMeasure;
+	BaseDepth2 : IfcPositiveLengthMeasure;
+	CentreOfGravityInY : OPTIONAL IfcPositiveLengthMeasure;
+END_ENTITY;
+
+ENTITY IfcCsgPrimitive3D
+ ABSTRACT SUPERTYPE OF (ONEOF
+	(IfcBlock
+	,IfcRectangularPyramid
+	,IfcRightCircularCone
+	,IfcRightCircularCylinder
+	,IfcSphere))
+ SUBTYPE OF (IfcGeometricRepresentationItem);
+	Position : IfcAxis2Placement3D;
+ DERIVE
+	Dim : IfcDimensionCount := 3;
+END_ENTITY;
+
+ENTITY IfcCsgSolid
+ SUBTYPE OF (IfcSolidModel);
+	TreeRootExpression : IfcCsgSelect;
+END_ENTITY;
+
+
+
+ENTITY IfcCurve
+ ABSTRACT SUPERTYPE OF (ONEOF
+	(IfcBoundedCurve
+	,IfcConic
+	,IfcLine
+	,IfcOffsetCurve2D
+	,IfcOffsetCurve3D))
+ SUBTYPE OF (IfcGeometricRepresentationItem);
+ DERIVE
+	Dim : IfcDimensionCount := IfcCurveDim(SELF);
+END_ENTITY;
+
+ENTITY IfcCurveBoundedPlane
+ SUBTYPE OF (IfcBoundedSurface);
+	BasisSurface : IfcPlane;
+	OuterBoundary : IfcCurve;
+	InnerBoundaries : SET [0:?] OF IfcCurve;
+ DERIVE
+	Dim : IfcDimensionCount := BasisSurface.Dim;
+END_ENTITY;
+
+ENTITY IfcCurveStyle
+ SUBTYPE OF (IfcPresentationStyle);
+	CurveFont : OPTIONAL IfcCurveFontOrScaledCurveFontSelect;
+	CurveWidth : OPTIONAL IfcSizeSelect;
+	CurveColour : OPTIONAL IfcColour;
+ WHERE
+	WR11 : (NOT(EXISTS(CurveWidth))) OR
+             ('IFC2X3.IFCPOSITIVELENGTHMEASURE' IN TYPEOF(CurveWidth)) OR 
+              (('IFC2X3.IFCDESCRIPTIVEMEASURE' IN TYPEOF(CurveWidth)) AND
+              (CurveWidth = 'by layer'));
+END_ENTITY;
+
+ENTITY IfcCurveStyleFont;
+	Name : OPTIONAL IfcLabel;
+	PatternList : LIST [1:?] OF IfcCurveStyleFontPattern;
+END_ENTITY;
+
+ENTITY IfcCurveStyleFontAndScaling;
+	Name : OPTIONAL IfcLabel;
+	CurveFont : IfcCurveStyleFontSelect;
+	CurveFontScaling : IfcPositiveRatioMeasure;
+END_ENTITY;
+
+ENTITY IfcCurveStyleFontPattern;
+	VisibleSegmentLength : IfcLengthMeasure;
+	InvisibleSegmentLength : IfcPositiveLengthMeasure;
+ WHERE
+	WR01 : VisibleSegmentLength >= 0.;
+END_ENTITY;
+
+
+ENTITY IfcDerivedProfileDef
+ SUBTYPE OF (IfcProfileDef);
+	ParentProfile : IfcProfileDef;
+	Operator : IfcCartesianTransformationOperator2D;
+	Label : OPTIONAL IfcLabel;
+ WHERE
+	WR1 : SELF\IfcProfileDef.ProfileType = ParentProfile.ProfileType;
+END_ENTITY;
+
+
+
+
+ENTITY IfcDirection
+ SUBTYPE OF (IfcGeometricRepresentationItem);
+	DirectionRatios : LIST [2:3] OF REAL;
+ DERIVE
+	Dim : IfcDimensionCount := HIINDEX(DirectionRatios);
+END_ENTITY;
+
+
+
+
+ENTITY IfcEdge
+ SUPERTYPE OF (ONEOF
+	(IfcEdgeCurve
+	,IfcOrientedEdge
+	,IfcSubedge))
+ SUBTYPE OF (IfcTopologicalRepresentationItem);
+	EdgeStart : IfcVertex;
+	EdgeEnd : IfcVertex;
+END_ENTITY;
+
+ENTITY IfcEdgeCurve
+ SUBTYPE OF (IfcEdge);
+	EdgeGeometry : IfcCurve;
+	SameSense : BOOLEAN;
+END_ENTITY;
+
+ENTITY IfcEdgeFeature
+ ABSTRACT SUPERTYPE OF (ONEOF
+	(IfcChamferEdgeFeature
+	,IfcRoundedEdgeFeature))
+ SUBTYPE OF (IfcFeatureElementSubtraction);
+	FeatureLength : OPTIONAL IfcPositiveLengthMeasure;
+END_ENTITY;
+
+ENTITY IfcEdgeLoop
+ SUBTYPE OF (IfcLoop);
+	EdgeList : LIST [1:?] OF IfcOrientedEdge;
+ DERIVE
+	Ne : INTEGER := SIZEOF(EdgeList);
+ WHERE
+	WR1 : (EdgeList[1].EdgeStart) :=: (EdgeList[Ne].EdgeEnd);
+	WR2 : IfcLoopHeadToTail(SELF);
+END_ENTITY;
+
+
+
+ENTITY IfcElementarySurface
+ ABSTRACT SUPERTYPE OF (ONEOF
+	(IfcPlane))
+ SUBTYPE OF (IfcSurface);
+	Position : IfcAxis2Placement3D;
+ DERIVE
+	Dim : IfcDimensionCount := Position.Dim;
+END_ENTITY;
+
+ENTITY IfcEllipse
+ SUBTYPE OF (IfcConic);
+	SemiAxis1 : IfcPositiveLengthMeasure;
+	SemiAxis2 : IfcPositiveLengthMeasure;
+END_ENTITY;
+
+ENTITY IfcEllipseProfileDef
+ SUBTYPE OF (IfcParameterizedProfileDef);
+	SemiAxis1 : IfcPositiveLengthMeasure;
+	SemiAxis2 : IfcPositiveLengthMeasure;
+END_ENTITY;
+
+
+ENTITY IfcExtrudedAreaSolid
+ SUBTYPE OF (IfcSweptAreaSolid);
+	ExtrudedDirection : IfcDirection;
+	Depth : IfcPositiveLengthMeasure;
+ WHERE
+	WR31 : IfcDotProduct(IfcRepresentationItem() || IfcGeometricRepresentationItem() || IfcDirection([0.0,0.0,1.0]), SELF.ExtrudedDirection) <> 0.0;
+END_ENTITY;
+
+ENTITY IfcFace
+ SUPERTYPE OF (ONEOF
+	(IfcFaceSurface))
+ SUBTYPE OF (IfcTopologicalRepresentationItem);
+	Bounds : SET [1:?] OF IfcFaceBound;
+ WHERE
+	WR1 : SIZEOF(QUERY(temp <* Bounds | 'IFC2X3.IFCFACEOUTERBOUND' IN TYPEOF(temp))) <= 1;
+END_ENTITY;
+
+ENTITY IfcFaceBasedSurfaceModel
+ SUBTYPE OF (IfcGeometricRepresentationItem);
+	FbsmFaces : SET [1:?] OF IfcConnectedFaceSet;
+ DERIVE
+	Dim : IfcDimensionCount := 3;
+END_ENTITY;
+
+ENTITY IfcFaceBound
+ SUPERTYPE OF (ONEOF
+	(IfcFaceOuterBound))
+ SUBTYPE OF (IfcTopologicalRepresentationItem);
+	Bound : IfcLoop;
+	Orientation : BOOLEAN;
+END_ENTITY;
+
+ENTITY IfcFaceOuterBound
+ SUBTYPE OF (IfcFaceBound);
+END_ENTITY;
+
+ENTITY IfcFaceSurface
+ SUBTYPE OF (IfcFace);
+	FaceSurface : IfcSurface;
+	SameSense : BOOLEAN;
+END_ENTITY;
+
+ENTITY IfcFacetedBrep
+ SUBTYPE OF (IfcManifoldSolidBrep);
+END_ENTITY;
+
+ENTITY IfcFacetedBrepWithVoids
+ SUBTYPE OF (IfcManifoldSolidBrep);
+	Voids : SET [1:?] OF IfcClosedShell;
+END_ENTITY;
+
+ENTITY IfcFailureConnectionCondition
+ SUBTYPE OF (IfcStructuralConnectionCondition);
+	TensionFailureX : OPTIONAL IfcForceMeasure;
+	TensionFailureY : OPTIONAL IfcForceMeasure;
+	TensionFailureZ : OPTIONAL IfcForceMeasure;
+	CompressionFailureX : OPTIONAL IfcForceMeasure;
+	CompressionFailureY : OPTIONAL IfcForceMeasure;
+	CompressionFailureZ : OPTIONAL IfcForceMeasure;
+END_ENTITY;
+
+
+ENTITY IfcGeometricRepresentationContext
+ SUPERTYPE OF (ONEOF
+	(IfcGeometricRepresentationSubContext))
+ SUBTYPE OF (IfcRepresentationContext);
+	CoordinateSpaceDimension : IfcDimensionCount;
+	Precision : OPTIONAL REAL;
+	WorldCoordinateSystem : IfcAxis2Placement;
+	TrueNorth : OPTIONAL IfcDirection;
+ INVERSE
+	HasSubContexts : SET [0:?] OF IfcGeometricRepresentationSubContext FOR ParentContext;
+END_ENTITY;
+
+ENTITY IfcGeometricRepresentationItem
+ ABSTRACT SUPERTYPE OF (ONEOF
+	(IfcAnnotationFillArea
+	,IfcAnnotationSurface
+	,IfcBooleanResult
+	,IfcBoundingBox
+	,IfcCartesianTransformationOperator
+	,IfcCompositeCurveSegment
+	,IfcCsgPrimitive3D
+	,IfcCurve
+	,IfcDefinedSymbol
+	,IfcDirection
+	,IfcDraughtingCallout
+	,IfcFaceBasedSurfaceModel
+	,IfcFillAreaStyleHatching
+	,IfcFillAreaStyleTileSymbolWithStyle
+	,IfcFillAreaStyleTiles
+	,IfcGeometricSet
+	,IfcHalfSpaceSolid
+	,IfcLightSource
+	,IfcOneDirectionRepeatFactor
+	,IfcPlacement
+	,IfcPlanarExtent
+	,IfcPoint
+	,IfcSectionedSpine
+	,IfcShellBasedSurfaceModel
+	,IfcSolidModel
+	,IfcSurface
+	,IfcTextLiteral
+	,IfcVector))
+ SUBTYPE OF (IfcRepresentationItem);
+END_ENTITY;
+
+ENTITY IfcGeometricRepresentationSubContext
+ SUBTYPE OF (IfcGeometricRepresentationContext);
+	ParentContext : IfcGeometricRepresentationContext;
+	TargetScale : OPTIONAL IfcPositiveRatioMeasure;
+	TargetView : IfcGeometricProjectionEnum;
+	UserDefinedTargetView : OPTIONAL IfcLabel;
+ DERIVE
+	SELF\IfcGeometricRepresentationContext.WorldCoordinateSystem : IfcAxis2Placement := ParentContext.WorldCoordinateSystem;
+	SELF\IfcGeometricRepresentationContext.CoordinateSpaceDimension : IfcDimensionCount := ParentContext.CoordinateSpaceDimension;
+	SELF\IfcGeometricRepresentationContext.TrueNorth : IfcDirection := NVL(ParentContext.TrueNorth,SELF.WorldCoordinateSystem.P[2]);
+	SELF\IfcGeometricRepresentationContext.Precision : REAL := NVL(ParentContext.Precision,1.E-5);
+ WHERE
+	WR31 : NOT('IFC2X3.IFCGEOMETRICREPRESENTATIONSUBCONTEXT' IN TYPEOF(ParentContext));
+	WR32 : (TargetView <> IfcGeometricProjectionEnum.USERDEFINED) OR 
+             ((TargetView =  IfcGeometricProjectionEnum.USERDEFINED) AND 
+              EXISTS(UserDefinedTargetView));
+END_ENTITY;
+
+ENTITY IfcGeometricSet
+ SUPERTYPE OF (ONEOF
+	(IfcGeometricCurveSet))
+ SUBTYPE OF (IfcGeometricRepresentationItem);
+	Elements : SET [1:?] OF IfcGeometricSetSelect;
+ DERIVE
+	Dim : IfcDimensionCount := Elements[1].Dim;
+ WHERE
+	WR21 : SIZEOF(QUERY(Temp <* Elements |
+               Temp.Dim <> Elements[1].Dim))
+             = 0;
+END_ENTITY;
+
+ENTITY IfcGrid
+ SUBTYPE OF (IfcProduct);
+	UAxes : LIST [1:?] OF UNIQUE IfcGridAxis;
+	VAxes : LIST [1:?] OF UNIQUE IfcGridAxis;
+	WAxes : OPTIONAL LIST [1:?] OF UNIQUE IfcGridAxis;
+ INVERSE
+	ContainedInStructure : SET [0:1] OF IfcRelContainedInSpatialStructure FOR RelatedElements;
+ WHERE
+	WR41 : EXISTS(SELF\IfcProduct.ObjectPlacement);
+END_ENTITY;
+
+ENTITY IfcGridAxis;
+	AxisTag : OPTIONAL IfcLabel;
+	AxisCurve : IfcCurve;
+	SameSense : IfcBoolean;
+ INVERSE
+	PartOfW : SET [0:1] OF IfcGrid FOR WAxes;
+	PartOfV : SET [0:1] OF IfcGrid FOR VAxes;
+	PartOfU : SET [0:1] OF IfcGrid FOR UAxes;
+	HasIntersections : SET [0:?] OF IfcVirtualGridIntersection FOR IntersectingAxes;
+ WHERE
+	WR1 : AxisCurve.Dim = 2;
+	WR2 : (SIZEOF(PartOfU) = 1) XOR (SIZEOF(PartOfV) = 1) XOR (SIZEOF(PartOfW) = 1);
+END_ENTITY;
+
+ENTITY IfcGridPlacement
+ SUBTYPE OF (IfcObjectPlacement);
+	PlacementLocation : IfcVirtualGridIntersection;
+	PlacementRefDirection : OPTIONAL IfcVirtualGridIntersection;
+END_ENTITY;
+
+
+ENTITY IfcHalfSpaceSolid
+ SUPERTYPE OF (ONEOF
+	(IfcBoxedHalfSpace
+	,IfcPolygonalBoundedHalfSpace))
+ SUBTYPE OF (IfcGeometricRepresentationItem);
+	BaseSurface : IfcSurface;
+	AgreementFlag : BOOLEAN;
+ DERIVE
+	Dim : IfcDimensionCount := 3;
+END_ENTITY;
+
+ENTITY IfcIShapeProfileDef
+ SUPERTYPE OF (ONEOF
+	(IfcAsymmetricIShapeProfileDef))
+ SUBTYPE OF (IfcParameterizedProfileDef);
+	OverallWidth : IfcPositiveLengthMeasure;
+	OverallDepth : IfcPositiveLengthMeasure;
+	WebThickness : IfcPositiveLengthMeasure;
+	FlangeThickness : IfcPositiveLengthMeasure;
+	FilletRadius : OPTIONAL IfcPositiveLengthMeasure;
+ WHERE
+	WR1 : FlangeThickness < (OverallDepth / 2.);
+	WR2 : WebThickness < OverallWidth;
+	WR3 : NOT(EXISTS(FilletRadius)) OR
+            ((FilletRadius <= (OverallWidth - WebThickness)/2.) AND 
+             (FilletRadius <= (OverallDepth - (2. * FlangeThickness))/2.));
+END_ENTITY;
+
+
+
+ENTITY IfcLShapeProfileDef
+ SUBTYPE OF (IfcParameterizedProfileDef);
+	Depth : IfcPositiveLengthMeasure;
+	Width : OPTIONAL IfcPositiveLengthMeasure;
+	Thickness : IfcPositiveLengthMeasure;
+	FilletRadius : OPTIONAL IfcPositiveLengthMeasure;
+	EdgeRadius : OPTIONAL IfcPositiveLengthMeasure;
+	LegSlope : OPTIONAL IfcPlaneAngleMeasure;
+	CentreOfGravityInX : OPTIONAL IfcPositiveLengthMeasure;
+	CentreOfGravityInY : OPTIONAL IfcPositiveLengthMeasure;
+ WHERE
+	WR21 : Thickness < Depth;
+	WR22 : NOT(EXISTS(Width)) OR (Thickness < Width);
+END_ENTITY;
+
+
+ENTITY IfcLine
+ SUBTYPE OF (IfcCurve);
+	Pnt : IfcCartesianPoint;
+	Dir : IfcVector;
+ WHERE
+	WR1 : Dir.Dim = Pnt.Dim;
+END_ENTITY;
+
+
+ENTITY IfcLocalPlacement
+ SUBTYPE OF (IfcObjectPlacement);
+	PlacementRelTo : OPTIONAL IfcObjectPlacement;
+	RelativePlacement : IfcAxis2Placement;
+ WHERE
+	WR21 : IfcCorrectLocalPlacement(RelativePlacement, PlacementRelTo);
+END_ENTITY;
+
+ENTITY IfcLoop
+ SUPERTYPE OF (ONEOF
+	(IfcEdgeLoop
+	,IfcPolyLoop
+	,IfcVertexLoop))
+ SUBTYPE OF (IfcTopologicalRepresentationItem);
+END_ENTITY;
+
+ENTITY IfcManifoldSolidBrep
+ ABSTRACT SUPERTYPE OF (ONEOF
+	(IfcFacetedBrep
+	,IfcFacetedBrepWithVoids))
+ SUBTYPE OF (IfcSolidModel);
+	Outer : IfcClosedShell;
+END_ENTITY;
+
+ENTITY IfcMappedItem
+ SUBTYPE OF (IfcRepresentationItem);
+	MappingSource : IfcRepresentationMap;
+	MappingTarget : IfcCartesianTransformationOperator;
+END_ENTITY;
+
+
+
+ENTITY IfcObjectPlacement
+ ABSTRACT SUPERTYPE OF (ONEOF
+	(IfcGridPlacement
+	,IfcLocalPlacement));
+ INVERSE
+	PlacesObject : SET [1:1] OF IfcProduct FOR ObjectPlacement;
+	ReferencedByPlacements : SET [0:?] OF IfcLocalPlacement FOR PlacementRelTo;
+END_ENTITY;
+
+
+
+
+
+ENTITY IfcOffsetCurve2D
+ SUBTYPE OF (IfcCurve);
+	BasisCurve : IfcCurve;
+	Distance : IfcLengthMeasure;
+	SelfIntersect : LOGICAL;
+ WHERE
+	WR1 : BasisCurve.Dim = 2;
+END_ENTITY;
+
+ENTITY IfcOffsetCurve3D
+ SUBTYPE OF (IfcCurve);
+	BasisCurve : IfcCurve;
+	Distance : IfcLengthMeasure;
+	SelfIntersect : LOGICAL;
+	RefDirection : IfcDirection;
+ WHERE
+	WR1 : BasisCurve.Dim = 3;
+END_ENTITY;
+
+
+
+ENTITY IfcOpenShell
+ SUBTYPE OF (IfcConnectedFaceSet);
+END_ENTITY;
+
+
+
+
+ENTITY IfcOrientedEdge
+ SUBTYPE OF (IfcEdge);
+	EdgeElement : IfcEdge;
+	Orientation : BOOLEAN;
+ DERIVE
+	SELF\IfcEdge.EdgeStart : IfcVertex := IfcBooleanChoose 
+                               (Orientation, EdgeElement.EdgeStart, EdgeElement.EdgeEnd);
+	SELF\IfcEdge.EdgeEnd : IfcVertex := IfcBooleanChoose 
+                               (Orientation, EdgeElement.EdgeEnd, EdgeElement.EdgeStart);
+ WHERE
+	WR1 : NOT('IFC2X3.IFCORIENTEDEDGE' IN TYPEOF(EdgeElement));
+END_ENTITY;
+
+
+ENTITY IfcParameterizedProfileDef
+ ABSTRACT SUPERTYPE OF (ONEOF
+	(IfcCShapeProfileDef
+	,IfcCircleProfileDef
+	,IfcCraneRailAShapeProfileDef
+	,IfcCraneRailFShapeProfileDef
+	,IfcEllipseProfileDef
+	,IfcIShapeProfileDef
+	,IfcLShapeProfileDef
+	,IfcRectangleProfileDef
+	,IfcTShapeProfileDef
+	,IfcTrapeziumProfileDef
+	,IfcUShapeProfileDef
+	,IfcZShapeProfileDef))
+ SUBTYPE OF (IfcProfileDef);
+	Position : IfcAxis2Placement2D;
+END_ENTITY;
+
+ENTITY IfcPath
+ SUBTYPE OF (IfcTopologicalRepresentationItem);
+	EdgeList : LIST [1:?] OF UNIQUE IfcOrientedEdge;
+ WHERE
+	WR1 : IfcPathHeadToTail(SELF);
+END_ENTITY;
+
+
+
+ENTITY IfcPlacement
+ ABSTRACT SUPERTYPE OF (ONEOF
+	(IfcAxis1Placement
+	,IfcAxis2Placement2D
+	,IfcAxis2Placement3D))
+ SUBTYPE OF (IfcGeometricRepresentationItem);
+	Location : IfcCartesianPoint;
+ DERIVE
+	Dim : IfcDimensionCount := Location.Dim;
+END_ENTITY;
+
+ENTITY IfcPlanarBox
+ SUBTYPE OF (IfcPlanarExtent);
+	Placement : IfcAxis2Placement;
+END_ENTITY;
+
+ENTITY IfcPlanarExtent
+ SUPERTYPE OF (ONEOF
+	(IfcPlanarBox))
+ SUBTYPE OF (IfcGeometricRepresentationItem);
+	SizeInX : IfcLengthMeasure;
+	SizeInY : IfcLengthMeasure;
+END_ENTITY;
+
+ENTITY IfcPlane
+ SUBTYPE OF (IfcElementarySurface);
+END_ENTITY;
+
+
+ENTITY IfcPoint
+ ABSTRACT SUPERTYPE OF (ONEOF
+	(IfcCartesianPoint
+	,IfcPointOnCurve
+	,IfcPointOnSurface))
+ SUBTYPE OF (IfcGeometricRepresentationItem);
+END_ENTITY;
+
+ENTITY IfcPointOnCurve
+ SUBTYPE OF (IfcPoint);
+	BasisCurve : IfcCurve;
+	PointParameter : IfcParameterValue;
+ DERIVE
+	Dim : IfcDimensionCount := BasisCurve.Dim;
+END_ENTITY;
+
+ENTITY IfcPointOnSurface
+ SUBTYPE OF (IfcPoint);
+	BasisSurface : IfcSurface;
+	PointParameterU : IfcParameterValue;
+	PointParameterV : IfcParameterValue;
+ DERIVE
+	Dim : IfcDimensionCount := BasisSurface.Dim;
+END_ENTITY;
+
+ENTITY IfcPolyLoop
+ SUBTYPE OF (IfcLoop);
+	Polygon : LIST [3:?] OF UNIQUE IfcCartesianPoint;
+ WHERE
+	WR21 : SIZEOF(QUERY(Temp <* Polygon | Temp.Dim <> Polygon[1].Dim)) = 0;
+END_ENTITY;
+
+ENTITY IfcPolygonalBoundedHalfSpace
+ SUBTYPE OF (IfcHalfSpaceSolid);
+	Position : IfcAxis2Placement3D;
+	PolygonalBoundary : IfcBoundedCurve;
+ WHERE
+	WR41 : PolygonalBoundary.Dim = 2;
+	WR42 : SIZEOF(TYPEOF(PolygonalBoundary) * [
+               'IFC2X3.IFCPOLYLINE', 
+               'IFC2X3.IFCCOMPOSITECURVE']
+             ) = 1;
+END_ENTITY;
+
+ENTITY IfcPolyline
+ SUBTYPE OF (IfcBoundedCurve);
+	Points : LIST [2:?] OF IfcCartesianPoint;
+ WHERE
+	WR41 : SIZEOF(QUERY(Temp <* Points | Temp.Dim <> Points[1].Dim)) = 0;
+END_ENTITY;
+
+ENTITY IfcProductDefinitionShape
+ SUBTYPE OF (IfcProductRepresentation);
+ INVERSE
+	ShapeOfProduct : SET [1:1] OF IfcProduct FOR Representation;
+	HasShapeAspects : SET [0:?] OF IfcShapeAspect FOR PartOfProductDefinitionShape;
+ WHERE
+	WR11 : SIZEOF(QUERY(temp <* Representations | 
+               (NOT('IFC2X3.IFCSHAPEMODEL' IN TYPEOF(temp)))
+             )) = 0;
+END_ENTITY;
+
+ENTITY IfcProductRepresentation
+ SUPERTYPE OF (ONEOF
+	(IfcMaterialDefinitionRepresentation
+	,IfcProductDefinitionShape));
+	Name : OPTIONAL IfcLabel;
+	Description : OPTIONAL IfcText;
+	Representations : LIST [1:?] OF IfcRepresentation;
+END_ENTITY;
+
+ENTITY IfcProfileDef
+ ABSTRACT SUPERTYPE OF (ONEOF
+	(IfcArbitraryClosedProfileDef
+	,IfcArbitraryOpenProfileDef
+	,IfcCompositeProfileDef
+	,IfcDerivedProfileDef
+	,IfcParameterizedProfileDef));
+	ProfileType : IfcProfileTypeEnum;
+	ProfileName : OPTIONAL IfcLabel;
+END_ENTITY;
+
+ENTITY IfcProfileProperties
+ ABSTRACT SUPERTYPE OF (ONEOF
+	(IfcGeneralProfileProperties
+	,IfcRibPlateProfileProperties));
+	ProfileName : OPTIONAL IfcLabel;
+	ProfileDefinition : OPTIONAL IfcProfileDef;
+END_ENTITY;
+
+ENTITY IfcRationalBezierCurve
+ SUBTYPE OF (IfcBezierCurve);
+	WeightsData : LIST [2:?] OF REAL;
+ DERIVE
+	Weights : ARRAY [0:255] OF REAL := IfcListToArray(WeightsData,0,SELF\IfcBSplineCurve.UpperIndexOnControlPoints);
+ WHERE
+	WR1 : SIZEOF(WeightsData) = SIZEOF(SELF\IfcBSplineCurve.ControlPointsList);
+	WR2 : IfcCurveWeightsPositive(SELF);
+END_ENTITY;
+
+ENTITY IfcRectangleHollowProfileDef
+ SUBTYPE OF (IfcRectangleProfileDef);
+	WallThickness : IfcPositiveLengthMeasure;
+	InnerFilletRadius : OPTIONAL IfcPositiveLengthMeasure;
+	OuterFilletRadius : OPTIONAL IfcPositiveLengthMeasure;
+ WHERE
+	WR31 : (WallThickness < (SELF\IfcRectangleProfileDef.XDim/2.)) AND 
+             (WallThickness < (SELF\IfcRectangleProfileDef.YDim/2.));
+	WR32 : NOT(EXISTS(OuterFilletRadius)) OR 
+             ((OuterFilletRadius <= (SELF\IfcRectangleProfileDef.XDim/2.)) AND 
+              (OuterFilletRadius <= (SELF\IfcRectangleProfileDef.YDim/2.)));
+	WR33 : NOT(EXISTS(InnerFilletRadius)) OR 
+             ((InnerFilletRadius <= (SELF\IfcRectangleProfileDef.XDim/2. - WallThickness)) AND 
+              (InnerFilletRadius <= (SELF\IfcRectangleProfileDef.YDim/2. - WallThickness)));
+END_ENTITY;
+
+ENTITY IfcRectangleProfileDef
+ SUPERTYPE OF (ONEOF
+	(IfcRectangleHollowProfileDef
+	,IfcRoundedRectangleProfileDef))
+ SUBTYPE OF (IfcParameterizedProfileDef);
+	XDim : IfcPositiveLengthMeasure;
+	YDim : IfcPositiveLengthMeasure;
+END_ENTITY;
+
+ENTITY IfcRectangularPyramid
+ SUBTYPE OF (IfcCsgPrimitive3D);
+	XLength : IfcPositiveLengthMeasure;
+	YLength : IfcPositiveLengthMeasure;
+	Height : IfcPositiveLengthMeasure;
+END_ENTITY;
+
+ENTITY IfcRectangularTrimmedSurface
+ SUBTYPE OF (IfcBoundedSurface);
+	BasisSurface : IfcSurface;
+	U1 : IfcParameterValue;
+	V1 : IfcParameterValue;
+	U2 : IfcParameterValue;
+	V2 : IfcParameterValue;
+	Usense : BOOLEAN;
+	Vsense : BOOLEAN;
+ DERIVE
+	Dim : IfcDimensionCount := BasisSurface.Dim;
+ WHERE
+	WR1 : U1 <> U2;
+	WR2 : V1 <> V2;
+	WR3 : (('IFC2X3.IFCELEMENTARYSURFACE' IN TYPEOF(BasisSurface)) AND
+                     (NOT ('IFC2X3.IFCPLANE' IN TYPEOF(BasisSurface)))) OR
+                     ('IFC2X3.IFCSURFACEOFREVOLUTION' IN TYPEOF(BasisSurface)) OR
+                     (Usense = (U2 > U1));
+	WR4 : Vsense = (V2 > V1);
+END_ENTITY;
+
+ENTITY IfcRepresentation
+ SUPERTYPE OF (ONEOF
+	(IfcShapeModel
+	,IfcStyleModel));
+	ContextOfItems : IfcRepresentationContext;
+	RepresentationIdentifier : OPTIONAL IfcLabel;
+	RepresentationType : OPTIONAL IfcLabel;
+	Items : SET [1:?] OF IfcRepresentationItem;
+ INVERSE
+	RepresentationMap : SET [0:1] OF IfcRepresentationMap FOR MappedRepresentation;
+	LayerAssignments : SET [0:?] OF IfcPresentationLayerAssignment FOR AssignedItems;
+	OfProductRepresentation : SET [0:1] OF IfcProductRepresentation FOR Representations;
+END_ENTITY;
+
+ENTITY IfcRepresentationContext
+ SUPERTYPE OF (ONEOF
+	(IfcGeometricRepresentationContext));
+	ContextIdentifier : OPTIONAL IfcLabel;
+	ContextType : OPTIONAL IfcLabel;
+ INVERSE
+	RepresentationsInContext : SET [0:?] OF IfcRepresentation FOR ContextOfItems;
+END_ENTITY;
+
+ENTITY IfcRepresentationItem
+ ABSTRACT SUPERTYPE OF (ONEOF
+	(IfcGeometricRepresentationItem
+	,IfcMappedItem
+	,IfcStyledItem
+	,IfcTopologicalRepresentationItem));
+ INVERSE
+	LayerAssignments : SET [0:?] OF IfcPresentationLayerAssignment FOR AssignedItems;
+	StyledByItem : SET [0:1] OF IfcStyledItem FOR Item;
+END_ENTITY;
+
+ENTITY IfcRepresentationMap;
+	MappingOrigin : IfcAxis2Placement;
+	MappedRepresentation : IfcRepresentation;
+ INVERSE
+	MapUsage : SET [0:?] OF IfcMappedItem FOR MappingSource;
+END_ENTITY;
+
+
+ENTITY IfcRevolvedAreaSolid
+ SUBTYPE OF (IfcSweptAreaSolid);
+	Axis : IfcAxis1Placement;
+	Angle : IfcPlaneAngleMeasure;
+ DERIVE
+	AxisLine : IfcLine := IfcRepresentationItem() || IfcGeometricRepresentationItem () || IfcCurve() || IfcLine(Axis.Location, 
+                   IfcRepresentationItem() || IfcGeometricRepresentationItem () || IfcVector(Axis.Z,1.0));
+ WHERE
+	WR31 : Axis.Location.Coordinates[3] = 0.0;
+	WR32 : Axis.Z.DirectionRatios[3] = 0.0;
+END_ENTITY;
+
+
+ENTITY IfcRightCircularCone
+ SUBTYPE OF (IfcCsgPrimitive3D);
+	Height : IfcPositiveLengthMeasure;
+	BottomRadius : IfcPositiveLengthMeasure;
+END_ENTITY;
+
+ENTITY IfcRightCircularCylinder
+ SUBTYPE OF (IfcCsgPrimitive3D);
+	Height : IfcPositiveLengthMeasure;
+	Radius : IfcPositiveLengthMeasure;
+END_ENTITY;
+
+
+ENTITY IfcRoundedRectangleProfileDef
+ SUBTYPE OF (IfcRectangleProfileDef);
+	RoundingRadius : IfcPositiveLengthMeasure;
+ WHERE
+	WR31 : ((RoundingRadius <= (SELF\IfcRectangleProfileDef.XDim/2.)) AND 
+              (RoundingRadius <= (SELF\IfcRectangleProfileDef.YDim/2.)));
+END_ENTITY;
+
+ENTITY IfcShapeModel
+ ABSTRACT SUPERTYPE OF (ONEOF
+	(IfcShapeRepresentation
+	,IfcTopologyRepresentation))
+ SUBTYPE OF (IfcRepresentation);
+ INVERSE
+	OfShapeAspect : SET [0:1] OF IfcShapeAspect FOR ShapeRepresentations;
+ WHERE
+	WR11 : (SIZEOF(SELF\IfcRepresentation.OfProductRepresentation) = 1) XOR 
+             (SIZEOF(SELF\IfcRepresentation.RepresentationMap) = 1) XOR
+             (SIZEOF(OfShapeAspect) = 1);
+END_ENTITY;
+
+ENTITY IfcShapeRepresentation
+ SUBTYPE OF (IfcShapeModel);
+ WHERE
+	WR21 : 'IFC2X3.IFCGEOMETRICREPRESENTATIONCONTEXT' 
+             IN TYPEOF(SELF\IfcRepresentation.ContextOfItems);
+	WR22 : SIZEOF(QUERY(temp <* Items | 
+               ('IFC2X3.IFCTOPOLOGICALREPRESENTATIONITEM' IN TYPEOF(temp))
+                 AND (NOT(SIZEOF(
+                   ['IFC2X3.IFCVERTEXPOINT',
+                    'IFC2X3.IFCEDGECURVE',
+                    'IFC2X3.IFCFACESURFACE'] * TYPEOF(temp)) = 1))
+             )) = 0;
+	WR23 : EXISTS(SELF\IfcRepresentation.RepresentationType);
+	WR24 : IfcShapeRepresentationTypes(SELF\IfcRepresentation.RepresentationType, SELF\IfcRepresentation.Items);
+END_ENTITY;
+
+ENTITY IfcShellBasedSurfaceModel
+ SUBTYPE OF (IfcGeometricRepresentationItem);
+	SbsmBoundary : SET [1:?] OF IfcShell;
+ DERIVE
+	Dim : IfcDimensionCount := 3;
+END_ENTITY;
+
+
+
+ENTITY IfcSolidModel
+ ABSTRACT SUPERTYPE OF (ONEOF
+	(IfcCsgSolid
+	,IfcManifoldSolidBrep
+	,IfcSweptAreaSolid
+	,IfcSweptDiskSolid))
+ SUBTYPE OF (IfcGeometricRepresentationItem);
+ DERIVE
+	Dim : IfcDimensionCount := 3;
+END_ENTITY;
+
+
+ENTITY IfcSphere
+ SUBTYPE OF (IfcCsgPrimitive3D);
+	Radius : IfcPositiveLengthMeasure;
+END_ENTITY;
+
+
+
+ENTITY IfcStyleModel
+ ABSTRACT SUPERTYPE OF (ONEOF
+	(IfcStyledRepresentation))
+ SUBTYPE OF (IfcRepresentation);
+END_ENTITY;
+
+ENTITY IfcStyledItem
+ SUPERTYPE OF (ONEOF
+	(IfcAnnotationOccurrence))
+ SUBTYPE OF (IfcRepresentationItem);
+	Item : OPTIONAL IfcRepresentationItem;
+	Styles : SET [1:?] OF IfcPresentationStyleAssignment;
+	Name : OPTIONAL IfcLabel;
+ WHERE
+	WR11 : SIZEOF(Styles) = 1;
+	WR12 : NOT('IFC2X3.IFCSTYLEDITEM' IN TYPEOF(Item));
+END_ENTITY;
+
+ENTITY IfcStyledRepresentation
+ SUBTYPE OF (IfcStyleModel);
+ WHERE
+	WR21 : SIZEOF(QUERY(temp <* SELF\IfcRepresentation.Items | 
+               (NOT('IFC2X3.IFCSTYLEDITEM' IN TYPEOF(temp)))
+             )) = 0;
+END_ENTITY;
+
+
+
+ENTITY IfcSubedge
+ SUBTYPE OF (IfcEdge);
+	ParentEdge : IfcEdge;
+END_ENTITY;
+
+ENTITY IfcSurface
+ ABSTRACT SUPERTYPE OF (ONEOF
+	(IfcBoundedSurface
+	,IfcElementarySurface
+	,IfcSweptSurface))
+ SUBTYPE OF (IfcGeometricRepresentationItem);
+END_ENTITY;
+
+ENTITY IfcSurfaceCurveSweptAreaSolid
+ SUBTYPE OF (IfcSweptAreaSolid);
+	Directrix : IfcCurve;
+	StartParam : IfcParameterValue;
+	EndParam : IfcParameterValue;
+	ReferenceSurface : IfcSurface;
+END_ENTITY;
+
+ENTITY IfcSurfaceOfLinearExtrusion
+ SUBTYPE OF (IfcSweptSurface);
+	ExtrudedDirection : IfcDirection;
+	Depth : IfcLengthMeasure;
+ DERIVE
+	ExtrusionAxis : IfcVector := IfcRepresentationItem() || IfcGeometricRepresentationItem () || IfcVector (ExtrudedDirection, Depth);
+ WHERE
+	WR41 : Depth > 0.;
+END_ENTITY;
+
+ENTITY IfcSurfaceOfRevolution
+ SUBTYPE OF (IfcSweptSurface);
+	AxisPosition : IfcAxis1Placement;
+ DERIVE
+	AxisLine : IfcLine := IfcRepresentationItem() || IfcGeometricRepresentationItem () || IfcCurve() || IfcLine(AxisPosition.Location, 
+                       IfcRepresentationItem() || IfcGeometricRepresentationItem () || IfcVector(AxisPosition.Z,1.0));
+END_ENTITY;
+
+ENTITY IfcSurfaceStyle
+ SUBTYPE OF (IfcPresentationStyle);
+	Side : IfcSurfaceSide;
+	Styles : SET [1:5] OF IfcSurfaceStyleElementSelect;
+ WHERE
+	WR11 : SIZEOF(QUERY(Style <* SELF.Styles |
+               'IFC2X3.IFCSURFACESTYLESHADING' IN
+                TYPEOF(Style)
+               )) <= 1;
+	WR12 : SIZEOF(QUERY(Style <* SELF.Styles |
+               'IFC2X3.IFCSURFACESTYLELIGHTING' IN
+                TYPEOF(Style)
+               )) <= 1;
+	WR13 : SIZEOF(QUERY(Style <* SELF.Styles |
+               'IFC2X3.IFCSURFACESTYLEREFRACTION' IN
+                TYPEOF(Style)
+               )) <= 1;
+	WR14 : SIZEOF(QUERY(Style <* SELF.Styles |
+               'IFC2X3.IFCSURFACESTYLEWITHTEXTURES' IN
+                TYPEOF(Style)
+               )) <= 1;
+	WR15 : SIZEOF(QUERY(Style <* SELF.Styles |
+               'IFC2X3.IFCEXTERNALLYDEFINEDSURFACESTYLE' IN
+                TYPEOF(Style)
+               )) <= 1;
+END_ENTITY;
+
+ENTITY IfcSurfaceStyleLighting;
+	DiffuseTransmissionColour : IfcColourRgb;
+	DiffuseReflectionColour : IfcColourRgb;
+	TransmissionColour : IfcColourRgb;
+	ReflectanceColour : IfcColourRgb;
+END_ENTITY;
+
+ENTITY IfcSurfaceStyleRefraction;
+	RefractionIndex : OPTIONAL IfcReal;
+	DispersionFactor : OPTIONAL IfcReal;
+END_ENTITY;
+
+ENTITY IfcSurfaceStyleRendering
+ SUBTYPE OF (IfcSurfaceStyleShading);
+	Transparency : OPTIONAL IfcNormalisedRatioMeasure;
+	DiffuseColour : OPTIONAL IfcColourOrFactor;
+	TransmissionColour : OPTIONAL IfcColourOrFactor;
+	DiffuseTransmissionColour : OPTIONAL IfcColourOrFactor;
+	ReflectionColour : OPTIONAL IfcColourOrFactor;
+	SpecularColour : OPTIONAL IfcColourOrFactor;
+	SpecularHighlight : OPTIONAL IfcSpecularHighlightSelect;
+	ReflectanceMethod : IfcReflectanceMethodEnum;
+END_ENTITY;
+
+ENTITY IfcSurfaceStyleShading
+ SUPERTYPE OF (ONEOF
+	(IfcSurfaceStyleRendering));
+	SurfaceColour : IfcColourRgb;
+END_ENTITY;
+
+ENTITY IfcSurfaceStyleWithTextures;
+	Textures : LIST [1:?] OF IfcSurfaceTexture;
+END_ENTITY;
+
+ENTITY IfcSurfaceTexture
+ ABSTRACT SUPERTYPE OF (ONEOF
+	(IfcBlobTexture
+	,IfcImageTexture
+	,IfcPixelTexture));
+	RepeatS : BOOLEAN;
+	RepeatT : BOOLEAN;
+	TextureType : IfcSurfaceTextureEnum;
+	TextureTransform : OPTIONAL IfcCartesianTransformationOperator2D;
+END_ENTITY;
+
+ENTITY IfcSweptAreaSolid
+ ABSTRACT SUPERTYPE OF (ONEOF
+	(IfcExtrudedAreaSolid
+	,IfcRevolvedAreaSolid
+	,IfcSurfaceCurveSweptAreaSolid))
+ SUBTYPE OF (IfcSolidModel);
+	SweptArea : IfcProfileDef;
+	Position : IfcAxis2Placement3D;
+ WHERE
+	WR22 : SweptArea.ProfileType = IfcProfileTypeEnum.Area;
+END_ENTITY;
+
+ENTITY IfcSweptDiskSolid
+ SUBTYPE OF (IfcSolidModel);
+	Directrix : IfcCurve;
+	Radius : IfcPositiveLengthMeasure;
+	InnerRadius : OPTIONAL IfcPositiveLengthMeasure;
+	StartParam : IfcParameterValue;
+	EndParam : IfcParameterValue;
+ WHERE
+	WR1 : Directrix.Dim = 3;
+	WR2 : (NOT EXISTS(InnerRadius)) OR (Radius > InnerRadius);
+END_ENTITY;
+
+ENTITY IfcSweptSurface
+ ABSTRACT SUPERTYPE OF (ONEOF
+	(IfcSurfaceOfLinearExtrusion
+	,IfcSurfaceOfRevolution))
+ SUBTYPE OF (IfcSurface);
+	SweptCurve : IfcProfileDef;
+	Position : IfcAxis2Placement3D;
+ DERIVE
+	Dim : IfcDimensionCount := Position.Dim;
+ WHERE
+	WR1 : NOT('IFC2X3.IFCDERIVEDPROFILEDEF' IN TYPEOF(SweptCurve));
+	WR2 : SweptCurve.ProfileType = IfcProfileTypeEnum.Curve;
+END_ENTITY;
+
+
+ENTITY IfcTShapeProfileDef
+ SUBTYPE OF (IfcParameterizedProfileDef);
+	Depth : IfcPositiveLengthMeasure;
+	FlangeWidth : IfcPositiveLengthMeasure;
+	WebThickness : IfcPositiveLengthMeasure;
+	FlangeThickness : IfcPositiveLengthMeasure;
+	FilletRadius : OPTIONAL IfcPositiveLengthMeasure;
+	FlangeEdgeRadius : OPTIONAL IfcPositiveLengthMeasure;
+	WebEdgeRadius : OPTIONAL IfcPositiveLengthMeasure;
+	WebSlope : OPTIONAL IfcPlaneAngleMeasure;
+	FlangeSlope : OPTIONAL IfcPlaneAngleMeasure;
+	CentreOfGravityInY : OPTIONAL IfcPositiveLengthMeasure;
+ WHERE
+	WR1 : FlangeThickness < Depth;
+	WR2 : WebThickness < FlangeWidth;
+END_ENTITY;
+
+
+
+
+ENTITY IfcTopologicalRepresentationItem
+ ABSTRACT SUPERTYPE OF (ONEOF
+	(IfcConnectedFaceSet
+	,IfcEdge
+	,IfcFace
+	,IfcFaceBound
+	,IfcLoop
+	,IfcPath
+	,IfcVertex))
+ SUBTYPE OF (IfcRepresentationItem);
+END_ENTITY;
+
+ENTITY IfcTopologyRepresentation
+ SUBTYPE OF (IfcShapeModel);
+ WHERE
+	WR21 : SIZEOF(QUERY(temp <* SELF\IfcRepresentation.Items | 
+               NOT('IFC2X3.IFCTOPOLOGICALREPRESENTATIONITEM' IN TYPEOF(temp))
+             )) = 0;
+	WR22 : EXISTS(SELF\IfcRepresentation.RepresentationType);
+	WR23 : IfcTopologyRepresentationTypes(SELF\IfcRepresentation.RepresentationType, SELF\IfcRepresentation.Items);
+END_ENTITY;
+
+
+ENTITY IfcTrapeziumProfileDef
+ SUBTYPE OF (IfcParameterizedProfileDef);
+	BottomXDim : IfcPositiveLengthMeasure;
+	TopXDim : IfcPositiveLengthMeasure;
+	YDim : IfcPositiveLengthMeasure;
+	TopXOffset : IfcLengthMeasure;
+END_ENTITY;
+
+
+
+
+ENTITY IfcUShapeProfileDef
+ SUBTYPE OF (IfcParameterizedProfileDef);
+	Depth : IfcPositiveLengthMeasure;
+	FlangeWidth : IfcPositiveLengthMeasure;
+	WebThickness : IfcPositiveLengthMeasure;
+	FlangeThickness : IfcPositiveLengthMeasure;
+	FilletRadius : OPTIONAL IfcPositiveLengthMeasure;
+	EdgeRadius : OPTIONAL IfcPositiveLengthMeasure;
+	FlangeSlope : OPTIONAL IfcPlaneAngleMeasure;
+	CentreOfGravityInX : OPTIONAL IfcPositiveLengthMeasure;
+ WHERE
+	WR21 : FlangeThickness < (Depth / 2.);
+	WR22 : WebThickness < FlangeWidth;
+END_ENTITY;
+
+
+
+ENTITY IfcVector
+ SUBTYPE OF (IfcGeometricRepresentationItem);
+	Orientation : IfcDirection;
+	Magnitude : IfcLengthMeasure;
+ DERIVE
+	Dim : IfcDimensionCount := Orientation.Dim;
+ WHERE
+	WR1 : Magnitude >= 0.0;
+END_ENTITY;
+
+ENTITY IfcVertex
+ SUPERTYPE OF (ONEOF
+	(IfcVertexPoint))
+ SUBTYPE OF (IfcTopologicalRepresentationItem);
+END_ENTITY;
+
+ENTITY IfcVertexBasedTextureMap;
+	TextureVertices : LIST [3:?] OF IfcTextureVertex;
+	TexturePoints : LIST [3:?] OF IfcCartesianPoint;
+END_ENTITY;
+
+ENTITY IfcVertexLoop
+ SUBTYPE OF (IfcLoop);
+	LoopVertex : IfcVertex;
+END_ENTITY;
+
+ENTITY IfcVertexPoint
+ SUBTYPE OF (IfcVertex);
+	VertexGeometry : IfcPoint;
+END_ENTITY;
+
+
+ENTITY IfcVirtualGridIntersection;
+	IntersectingAxes : LIST [2:2] OF UNIQUE IfcGridAxis;
+	OffsetDistances : LIST [2:3] OF IfcLengthMeasure;
+END_ENTITY;
+
+ENTITY IfcZShapeProfileDef
+ SUBTYPE OF (IfcParameterizedProfileDef);
+	Depth : IfcPositiveLengthMeasure;
+	FlangeWidth : IfcPositiveLengthMeasure;
+	WebThickness : IfcPositiveLengthMeasure;
+	FlangeThickness : IfcPositiveLengthMeasure;
+	FilletRadius : OPTIONAL IfcPositiveLengthMeasure;
+	EdgeRadius : OPTIONAL IfcPositiveLengthMeasure;
+ WHERE
+	WR21 : FlangeThickness < (Depth / 2.);
+END_ENTITY;
+END_SCHEMA;
